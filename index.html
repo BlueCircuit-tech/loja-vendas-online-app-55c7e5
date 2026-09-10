@@ -2747,6 +2747,133 @@ document.addEventListener('keydown', (e) => {
 </script>
 </section>
 
+    <section data-tela="notificacoes" class="hidden">
+  <div class="px-5 pt-2 pb-6 animate-fadeIn">
+    <!-- Cabeçalho -->
+    <div class="flex items-center justify-between mb-1">
+      <div>
+        <h1 class="font-display text-2xl font-bold text-gray-900">Notificações</h1>
+        <p class="text-sm text-gray-500 mt-0.5">3 não lidas</p>
+      </div>
+      <button onclick="notificacoes_marcarTodasLidas()" class="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors px-3 py-1.5 rounded-lg hover:bg-emerald-50 active:scale-95">
+        Marcar todas como lidas
+      </button>
+    </div>
+
+    <!-- Filtros -->
+    <div class="flex gap-2 mt-4 mb-5 overflow-x-auto pb-1 -mx-5 px-5 scrollbar-hide" id="notificacoes-filtros">
+      <button data-filtro="todos" onclick="notificacoes_filtrar('todos')" class="notificacoes-filtro-btn flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-gray-900 text-white">Todos</button>
+      <button data-filtro="pedidos" onclick="notificacoes_filtrar('pedidos')" class="notificacoes-filtro-btn flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">Pedidos</button>
+      <button data-filtro="agendamentos" onclick="notificacoes_filtrar('agendamentos')" class="notificacoes-filtro-btn flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">Agendamentos</button>
+      <button data-filtro="promocoes" onclick="notificacoes_filtrar('promocoes')" class="notificacoes-filtro-btn flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">Promoções</button>
+    </div>
+
+    <!-- Lista de notificações -->
+    <div id="notificacoes-lista" class="space-y-3"></div>
+
+    <!-- Estado vazio -->
+    <div id="notificacoes-vazio" class="hidden text-center py-16">
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      </div>
+      <p class="text-gray-500 font-medium">Nenhuma notificação aqui</p>
+      <p class="text-sm text-gray-400 mt-1">Você está em dia!</p>
+    </div>
+  </div>
+
+  <script>
+    const notificacoes_dados = [
+      { id: 1, tipo: 'pedido', icone: 'carrinho', cor: 'bg-blue-100 text-blue-600', titulo: 'Pedido #PC-2847 saiu para entrega!', mensagem: 'Seu pedido está a caminho. Previsão de chegada: até 40 min.', tempo: 'Há 5 min', lida: false, destino: 'confirmacao-pedido', dados: { pedidoId: 'PC-2847' } },
+      { id: 2, tipo: 'agendamento', icone: 'calendario', cor: 'bg-purple-100 text-purple-600', titulo: 'Lembrete: banho do Max é amanhã às 10h', mensagem: 'Não esqueça do agendamento na PetLover Banho & Tosa. Cancelamento com até 2h de antecedência.', tempo: 'Há 30 min', lida: false, destino: 'agendar-servico', dados: {} },
+      { id: 3, tipo: 'promocao', icone: 'sino', cor: 'bg-orange-100 text-orange-600', titulo: 'Promoção relâmpago: 30% OFF em brinquedos', mensagem: 'Aproveite até hoje! Válido para itens selecionados no catálogo.', tempo: 'Há 1 h', lida: false, destino: 'catalogo-completo', dados: {} },
+      { id: 4, tipo: 'avaliacao', icone: 'coracao', cor: 'bg-pink-100 text-pink-600', titulo: 'Avalie seu último pedido', mensagem: 'Conte como foi a experiência com o Petisco Natural Frango 500g.', tempo: 'Ontem', lida: true, destino: null, dados: {} },
+      { id: 5, tipo: 'pedido', icone: 'carrinho', cor: 'bg-blue-100 text-blue-600', titulo: 'Pedido #PC-2835 confirmado', mensagem: 'Pagamento aprovado. Preparamos tudo para envio.', tempo: 'Ontem', lida: true, destino: 'confirmacao-pedido', dados: { pedidoId: 'PC-2835' } },
+      { id: 6, tipo: 'agendamento', icone: 'calendario', cor: 'bg-purple-100 text-purple-600', titulo: 'Consulta de vacina da Luna confirmada', mensagem: 'Agendado para 18/01 às 14h na PetClínica Centro. Leve a carteira de vacinação.', tempo: '2 dias', lida: true, destino: 'agendar-servico', dados: {} },
+      { id: 7, tipo: 'promocao', icone: 'sino', cor: 'bg-orange-100 text-orange-600', titulo: 'Frete grátis em compras acima de R$ 150', mensagem: 'Aproveite o frete grátis para toda a região. Válido até domingo.', tempo: '3 dias', lida: true, destino: 'catalogo-completo', dados: {} },
+      { id: 8, tipo: 'pedido', icone: 'carrinho', cor: 'bg-blue-100 text-blue-600', titulo: 'Pedido #PC-2810 entregue', mensagem: 'Seu pedido foi entregue. Esperamos que o Thor goste da ração!', tempo: '5 dias', lida: true, destino: 'confirmacao-pedido', dados: { pedidoId: 'PC-2810' } },
+      { id: 9, tipo: 'agendamento', icone: 'calendario', cor: 'bg-purple-100 text-purple-600', titulo: 'Hora do recreio! Agende um day care', mensagem: 'O Thor parece que precisa de socialização. Agende um dia no day care.', tempo: '1 semana', lida: true, destino: 'agendar-servico', dados: {} },
+    ];
+
+    let notificacoes_filtroAtual = 'todos';
+
+    function notificacoes_iconeSVG(tipo) {
+      const icones = {
+        carrinho: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>',
+        calendario: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>',
+        sino: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>',
+        coracao: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>',
+      };
+      return icones[tipo] || icones.sino;
+    }
+
+    function notificacoes_renderizar() {
+      const lista = document.getElementById('notificacoes-lista');
+      const vazio = document.getElementById('notificacoes-vazio');
+      const filtradas = notificacoes_filtroAtual === 'todos'
+        ? notificacoes_dados
+        : notificacoes_dados.filter(n => n.tipo === notificacoes_filtroAtual);
+
+      if (filtradas.length === 0) {
+        lista.innerHTML = '';
+        vazio.classList.remove('hidden');
+        return;
+      }
+      vazio.classList.add('hidden');
+
+      lista.innerHTML = filtradas.map(n => {
+        const naoLida = !n.lida ? 'bg-white ring-2 ring-gray-900/5' : 'bg-gray-50';
+        const bolinha = !n.lida ? '<span class="w-2.5 h-2.5 rounded-full bg-gray-900 flex-shrink-0 ml-1"></span>' : '';
+        return '<div onclick="notificacoes_abrir(' + n.id + ')" class="' + naoLida + ' rounded-2xl p-4 cursor-pointer transition-all hover:shadow-md active:scale-[0.98] flex gap-3.5">' +
+          '<div class="w-11 h-11 rounded-xl ' + n.cor + ' flex items-center justify-center flex-shrink-0">' + notificacoes_iconeSVG(n.icone) + '</div>' +
+          '<div class="flex-1 min-w-0">' +
+            '<div class="flex items-center gap-1">' +
+              '<p class="font-semibold text-sm text-gray-900 truncate">' + n.titulo + '</p>' + bolinha +
+            '</div>' +
+            '<p class="text-sm text-gray-500 mt-0.5 leading-relaxed">' + n.mensagem + '</p>' +
+            '<span class="text-xs text-gray-400 mt-1.5 block">' + n.tempo + '</span>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function notificacoes_filtrar(filtro) {
+      notificacoes_filtroAtual = filtro;
+      document.querySelectorAll('.notificacoes-filtro-btn').forEach(b => {
+        if (b.dataset.filtro === filtro) {
+          b.classList.remove('bg-gray-100', 'text-gray-600');
+          b.classList.add('bg-gray-900', 'text-white');
+        } else {
+          b.classList.add('bg-gray-100', 'text-gray-600');
+          b.classList.remove('bg-gray-900', 'text-white');
+        }
+      });
+      notificacoes_renderizar();
+    }
+
+    function notificacoes_abrir(id) {
+      const n = notificacoes_dados.find(x => x.id === id);
+      if (!n) return;
+      n.lida = true;
+      notificacoes_renderizar();
+      if (n.destino) {
+        const params = n.dados && Object.keys(n.dados).length > 0 ? '&' + Object.entries(n.dados).map(([k,v]) => k + '=' + encodeURIComponent(v)).join('&') : '';
+        mostrarTela(n.destino + params);
+      } else {
+        toast('Abrindo detalhes da avaliação...', 'info');
+      }
+    }
+
+    function notificacoes_marcarTodasLidas() {
+      notificacoes_dados.forEach(n => n.lida = true);
+      notificacoes_renderizar();
+      const naoLidas = notificacoes_dados.filter(n => !n.lida).length;
+      toast('Todas as notificações foram marcadas como lidas', 'ok');
+    }
+
+    notificacoes_renderizar();
+  </script>
+</section>
+
     <!-- TELAS -->nbsp;<span id="carrinho-agendamento-preco">85,00</span></span>
           <button class="mt-1 text-xs text-error-600 font-medium underline decoration-1 hover:text-error-700 transition" onclick="carrinho_removerAgendamento()">Remover</button>
         </div>
