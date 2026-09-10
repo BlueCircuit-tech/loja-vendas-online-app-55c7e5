@@ -214,6 +214,432 @@ tailwind.config = {
 
   <!-- Área principal rolável -->
   <main id="main-scroll" class="flex-1 overflow-y-auto overflow-x-hidden bg-cinza-50" style="max-width:390px;">
+    <section data-tela="home-vitrine" class="hidden">
+  <div class="px-4 pb-4 pt-2 space-y-5 animate-fadeIn">
+
+    <!-- Saudação e localização -->
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-gray-500 font-body">Bom dia 👋</p>
+        <button onclick="mostrarTela('notificacoes')" class="flex items-center gap-1 text-gray-800 font-display font-bold text-base active:scale-95 transition-transform">
+          <svg class="w-4 h-4 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243A8 8 0 1117.657 16.657z"/><circle cx="12" cy="11" r="1.5" fill="currentColor" stroke="none"/></svg>
+          <span>Av. Paulista, 1234</span>
+          <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="mostrarTela('carrinho')" class="relative p-2 rounded-full bg-gray-100 active:scale-90 transition-all hover:bg-gray-200">
+          <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+          <span id="cart-badge-home" class="absolute -top-0.5 -right-0.5 w-5 h-5 bg-marca-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center">3</span>
+        </button>
+        <button onclick="mostrarTela('notificacoes')" class="relative p-2 rounded-full bg-gray-100 active:scale-90 transition-all hover:bg-gray-200">
+          <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute -top-0.5 -right-0.5 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de busca -->
+    <div class="relative" id="search-wrapper">
+      <div class="flex items-center bg-gray-100 rounded-2xl px-4 py-3 gap-3 focus-within:ring-2 focus-within:ring-marca-400 focus-within:bg-white transition-all">
+        <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input id="search-input" type="text" placeholder="Buscar ração, brinquedos, remédios..." class="bg-transparent w-full text-sm font-body text-gray-800 placeholder-gray-400 outline-none" oninput="home_vitrine_buscar(this.value)">
+      </div>
+      <div id="search-suggestions" class="hidden absolute top-full left-0 right-0 mt-1 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden"></div>
+    </div>
+
+    <!-- Banner rotativo -->
+    <div class="relative rounded-2xl overflow-hidden shadow-md" style="height:160px;">
+      <div id="banner-container" class="flex transition-transform duration-500 ease-out h-full">
+        <div class="w-full h-full flex-shrink-0 flex items-center p-5 relative" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+          <div class="flex-1 z-10">
+            <span class="bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Promoção</span>
+            <h3 class="text-white font-display font-bold text-xl mt-1.5 leading-tight">20% OFF em Ração Premium</h3>
+            <p class="text-green-100 text-xs mt-1 font-body">Para cães de porte médio e grande</p>
+            <button onclick="mostrarTela('catalogo-completo')" class="mt-3 bg-white text-emerald-700 text-xs font-bold px-4 py-2 rounded-xl active:scale-95 transition-all hover:shadow-lg">Ver ofertas</button>
+          </div>
+          <div class="absolute right-2 bottom-0 opacity-20">
+            <svg class="w-28 h-28 text-white" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="w-full h-full flex-shrink-0 flex items-center p-5 relative" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+          <div class="flex-1 z-10">
+            <span class="bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Novidade</span>
+            <h3 class="text-white font-display font-bold text-xl mt-1.5 leading-tight">Banho & Tosa Completo</h3>
+            <p class="text-amber-100 text-xs mt-1 font-body">Agende agora e ganhe 1 hidratação</p>
+            <button onclick="mostrarTela('agendar-servico')" class="mt-3 bg-white text-amber-600 text-xs font-bold px-4 py-2 rounded-xl active:scale-95 transition-all hover:shadow-lg">Agendar</button>
+          </div>
+          <div class="absolute right-2 bottom-0 opacity-20">
+            <svg class="w-28 h-28 text-white" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" rx="10" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="w-full h-full flex-shrink-0 flex items-center p-5 relative" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);">
+          <div class="flex-1 z-10">
+            <span class="bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Frete Grátis</span>
+            <h3 class="text-white font-display font-bold text-xl mt-1.5 leading-tight">Pedidos acima de R$ 89</h3>
+            <p class="text-indigo-200 text-xs mt-1 font-body">Entrega em até 2h na região</p>
+            <button onclick="mostrarTela('catalogo-completo')" class="mt-3 bg-white text-indigo-700 text-xs font-bold px-4 py-2 rounded-xl active:scale-95 transition-all hover:shadow-lg">Comprar agora</button>
+          </div>
+          <div class="absolute right-2 bottom-0 opacity-20">
+            <svg class="w-28 h-28 text-white" viewBox="0 0 100 100"><polygon points="50,10 90,80 10,80" fill="currentColor"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5" id="banner-dots"></div>
+    </div>
+
+    <!-- Categorias -->
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-display font-bold text-lg text-gray-900">Categorias</h2>
+        <button onclick="mostrarTela('catalogo-completo')" class="text-xs text-marca-600 font-bold active:scale-95 transition-transform">Ver todas →</button>
+      </div>
+      <div class="grid grid-cols-6 gap-3" id="categorias-grid">
+        <button onclick="home_vitrine_abrirCategoria('Ração')" class="flex flex-col items-center gap-1.5 active:scale-90 transition-all">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">
+            <svg class="w-7 h-7 text-amber-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-600 font-body font-medium leading-tight">Ração</span>
+        </button>
+        <button onclick="home_vitrine_abrirCategoria('Banho & Tosa')" class="flex flex-col items-center gap-1.5 active:scale-90 transition-all">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)">
+            <svg class="w-7 h-7 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M17.66 8L12 2.35 6.34 8A8.02 8.02 0 004 13.64c0 2 .78 4.11 2.34 5.67a7.99 7.99 0 009.32 0c1.56-1.56 2.34-3.67 2.34-5.67S19.22 9.56 17.66 8zM12 18.01c-1.08 0-2.01-.43-2.74-1.17a3.99 3.99 0 010-5.68c.73-.74 1.66-1.17 2.74-1.17s2.01.43 2.74 1.17c.73.74 1.17 1.66 1.17 2.74 0 2.76-2.48 4.01-4.91 4.01z"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-600 font-body font-medium leading-tight">Banho & Tosa</span>
+        </button>
+        <button onclick="home_vitrine_abrirCategoria('Consulta')" class="flex flex-col items-center gap-1.5 active:scale-90 transition-all">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8)">
+            <svg class="w-7 h-7 text-pink-600" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-600 font-body font-medium leading-tight">Consulta</span>
+        </button>
+        <button onclick="home_vitrine_abrirCategoria('Vacinas')" class="flex flex-col items-center gap-1.5 active:scale-90 transition-all">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0)">
+            <svg class="w-7 h-7 text-emerald-600" fill="currentColor" viewBox="0 0 24 24"><path d="M15.24 2.29l6.47 6.47-12.71 12.71-6.47-6.47 12.71-12.71zm3.89 1.35L16.17 7.1l1.41 1.41 2.96-2.46-1.41-1.81zM10.35 9.17l1.41-1.41 1.63 1.63-1.41 1.41-1.63-1.63zM2.41 17.59L8.66 12.93l2.83 2.83-2.12 2.12-3.53-1.17 1.55 1.55.71-.71-2.12-2.12-1.55 1.56z"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-600 font-body font-medium leading-tight">Vacinas</span>
+        </button>
+        <button onclick="home_vitrine_abrirCategoria('Acessórios')" class="flex flex-col items-center gap-1.5 active:scale-90 transition-all">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm" style="background:linear-gradient(135deg,#fef9c3,#fef08a)">
+            <svg class="w-7 h-7 text-yellow-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-600 font-body font-medium leading-tight">Acessórios</span>
+        </button>
+        <button onclick="home_vitrine_abrirCategoria('Medicamentos')" class="flex flex-col items-center gap-1.5 active:scale-90 transition-all">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe)">
+            <svg class="w-7 h-7 text-indigo-600" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+          </div>
+          <span class="text-[11px] text-gray-600 font-body font-medium leading-tight">Medicamentos</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Ações rápidas -->
+    <div class="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide" style="scrollbar-width:none;">
+      <button onclick="mostrarTela('agendar-servico')" class="flex-shrink-0 flex items-center gap-2 bg-marca-50 border border-marca-200 rounded-xl px-3 py-2 active:scale-95 transition-all">
+        <div class="w-8 h-8 rounded-lg bg-marca-100 flex items-center justify-center">
+          <svg class="w-4 h-4 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <span class="text-xs font-bold text-marca-800 font-body whitespace-nowrap">Agendar</span>
+      </button>
+      <button onclick="mostrarTela('meus-pets')" class="flex-shrink-0 flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-xl px-3 py-2 active:scale-95 transition-all">
+        <div class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+          <svg class="w-4 h-4 text-orange-700" fill="currentColor" viewBox="0 0 24 24"><path d="M4.5 9.5a2.5 2.5 0 015 0c0 .76-.27 1.47-.73 2.03C9.4 11.67 9.4 11.6 9.5 11.5c1.5-1.5 3.6-2.5 5.5-2.5h.5a2.5 2.5 0 012.5 2.5 2.5 2.5 0 01-2.5 2.5h-.5a5.51 5.51 0 00-5.5 5.5 5.51 5.51 0 005.5 5.5h.5a2.5 2.5 0 012.5 2.5 2.5 2.5 0 01-2.5 2.5h-.5a8.51 8.51 0 01-8.5-8.5 8.51 8.51 0 018.5-8.5c.22 0 .44.01.65.04A2.5 2.5 0 019.5 7.5 2.5 2.5 0 017 5 2.5 2.5 0 014.5 9.5z"/></svg>
+        </div>
+        <span class="text-xs font-bold text-orange-800 font-body whitespace-nowrap">Meus Pets</span>
+      </button>
+      <button onclick="mostrarTela('catalogo-completo')" class="flex-shrink-0 flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2 active:scale-95 transition-all">
+        <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+          <svg class="w-4 h-4 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </div>
+        <span class="text-xs font-bold text-blue-800 font-body whitespace-nowrap">Catálogo</span>
+      </button>
+      <button onclick="mostrarTela('checkout')" class="flex-shrink-0 flex items-center gap-2 bg-green-50 border border-green-200 rounded-xl px-3 py-2 active:scale-95 transition-all">
+        <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+          <svg class="w-4 h-4 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
+        </div>
+        <span class="text-xs font-bold text-green-800 font-body whitespace-nowrap">Finalizar</span>
+      </button>
+    </div>
+
+    <!-- Produtos em destaque -->
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-display font-bold text-lg text-gray-900">🔥 Destaques</h2>
+        <button onclick="mostrarTela('catalogo-completo')" class="text-xs text-marca-600 font-bold active:scale-95 transition-transform">Ver todos →</button>
+      </div>
+      <div class="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1" style="scrollbar-width:none;" id="produtos-destaque">
+      </div>
+    </div>
+
+    <!-- Serviços próximos -->
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-display font-bold text-lg text-gray-900">🏥 Serviços perto de você</h2>
+      </div>
+      <div class="space-y-3" id="servicos-lista">
+      </div>
+    </div>
+
+    <!-- Frete estimado -->
+    <div class="bg-gradient-to-r from-marca-50 to-green-50 rounded-2xl p-4 flex items-center gap-3 border border-marca-100">
+      <div class="w-12 h-12 rounded-xl bg-marca-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-display font-bold text-gray-900">Frete grátis acima de R$ 89</p>
+        <p class="text-xs text-gray-500 font-body">Seu pedido atual: R$ 0,00</p>
+      </div>
+      <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div class="h-full bg-marca-500 rounded-full transition-all duration-500" style="width:0%"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Resultado da busca -->
+  <div id="search-results-overlay" class="hidden fixed inset-0 bg-black/40 z-50 flex items-end" onclick="home_vitrine_fecharBusca(event)">
+    <div class="w-full bg-white rounded-t-3xl max-h-[75vh] overflow-hidden animate-slideUp" onclick="event.stopPropagation()">
+      <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+        <h3 class="font-display font-bold text-gray-900 text-sm">Resultados da busca</h3>
+        <button onclick="home_vitrine_fecharBusca()" class="p-1 rounded-full hover:bg-gray-100 active:scale-90 transition-all">
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div id="search-results-list" class="p-4 overflow-y-auto max-h-[60vh] space-y-3"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+const home_vitrine_produtos = [
+  { id:1, nome:"Ração Golden Formula Adulto 15kg", preco:189.90, precoAntigo:219.90, imagem:"racao", categoria:"Ração", freteGratis:true, avaliacao:4.8, vendas:1250, descricao:"Ração premium para cães adultos com fórmula balanceada que oferece saúde e bem-estar. Rico em proteínas e vitaminas." },
+  { id:2, nome:"Shampoo Antipulgas Pet Clean 500ml", preco:32.90, precoAntigo:null, imagem:"shampoo", categoria:"Banho & Tosa", freteGratis:false, avaliacao:4.5, vendas:890, descricao:"Shampoo antipulgas com ação prolongada de até 7 dias. Fórmula suave com ervas naturais." },
+  { id:3, nome:"Coleira Antipulgas Seresto Grande", preco:89.90, precoAntigo:109.90, imagem:"coleira", categoria:"Acessórios", freteGratis:true, avaliacao:4.9, vendas:2340, descricao:"Coleira repelente de pulgas e carrapatos com duração de até 8 meses." },
+  { id:4, nome:"Ração Whiskas Gatos Adultos Salmão 3kg", preco:54.90, precoAntigo:62.90, imagem:"racao-gato", categoria:"Ração", freteGratis:false, avaliacao:4.6, vendas:1890, descricao:"Ração úmida para gatos adultos com sabor salmão. Nutrição completa e sabor irresistível." },
+  { id:5, nome:"Osso de Pelúcia Mordedor Cães Médios", preco:29.90, precoAntigo:null, imagem:"brinquedo", categoria:"Acessórios", freteGratis:true, avaliacao:4.3, vendas:670, descricao:"Brinquedo mordedor em formato de osso, ideal para cães de porte médio. Resistente e durável." },
+  { id:6, nome:"Vermífugo Drontal Plus Sabor Carne", preco:45.90, precoAntigo:null, imagem:"remedio", categoria:"Medicamentos", freteGratis:false, avaliacao:4.7, vendas:3100, descricao:"Vermífugo de amplo espectro para cães e gatos. Protege contra vermes e parasitas intestinais." },
+  { id:7, nome:"Areia Sanitária Best Friends 4kg", preco:34.90, precoAntigo:39.90, imagem:"areia", categoria:"Acessórios", freteGratis:true, avaliacao:4.4, vendas:1560, descricao:"Areia sanitária aglomerante com controle de odor. Alta absorção e baixa poeira." },
+  { id:8, nome:"Vacina V10 + Antirrábica (Dose Única)", preco:85.00, precoAntigo:null, imagem:"vacina", categoria:"Vacinas", freteGratis:false, avaliacao:5.0, vendas:4200, descricao:"Vacina polivalente V10 mais dose de antirrábica. Consulte nosso veterinário antes da aplicação." }
+];
+
+const home_vitrine_servicos = [
+  { id:1, nome:"Banho & Tosa Completa", preco:75.00, duracao:"1h30", nota:4.9, avaliacoes:312, endereco:"Av. Paulista, 1500 - Bela Vista", distancia:"0.8 km", imagem:"banho-tosa", servicos:["Banho","Tosa","Hidratação","Unhas"] },
+  { id:2, nome:"Clínica Veterinária PetCare", preco:150.00, duracao:"30min", nota:4.8, avaliacoes:189, endereco:"R. Augusta, 450 - Consolação", distancia:"1.2 km", imagem:"clinica", servicos:["Consulta","Vacina","Exames","Cirurgia"] },
+  { id:3, nome:"Hotel Pet Happy Stay", preco:65.00, duracao:"Diária", nota:4.7, avaliacoes:98, endereco:"Al. Santos, 800 - Paraíso", distancia:"1.5 km", imagem:"hotel", servicos:["Hospedagem","Passeio","Alimentação","Brinquedos"] },
+  { id:4, nome:"Dog Walker & Passeios", preco:40.00, duracao:"1h", nota:4.6, avaliacoes:245, endereco:"R. Oscar Freire, 200 - Jardins", distancia:"0.5 km", imagem:"passeio", servicos:["Passeio","Treinamento","Socialização"] }
+];
+
+const home_vitrine_imagensProduto = {
+  "racao": "linear-gradient(145deg,#fde68a,#f59e0b)",
+  "shampoo": "linear-gradient(145deg,#dbeafe,#3b82f6)",
+  "coleira": "linear-gradient(145deg,#fce7f3,#ec4899)",
+  "racao-gato": "linear-gradient(145deg,#e0e7ff,#6366f1)",
+  "brinquedo": "linear-gradient(145deg,#d1fae5,#10b981)",
+  "remedio": "linear-gradient(145deg,#fee2e2,#ef4444)",
+  "areia": "linear-gradient(145deg,#f1f5f9,#94a3b8)",
+  "vacina": "linear-gradient(145deg,#ccfbf1,#14b8a6)"
+};
+
+const home_vitrine_imagensServico = {
+  "banho-tosa": "linear-gradient(145deg,#fef3c7,#f59e0b)",
+  "clinica": "linear-gradient(145deg,#dbeafe,#3b82f6)",
+  "hotel": "linear-gradient(145deg,#d1fae5,#10b981)",
+  "passeio": "linear-gradient(145deg,#fce7f3,#ec4899)"
+};
+
+let home_vitrine_bannerIdx = 0;
+let home_vitrine_bannerInterval;
+
+function home_vitrine_iniciarBanner() {
+  const dots = document.getElementById('banner-dots');
+  if (!dots) return;
+  const total = 3;
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'w-2 h-2 rounded-full bg-white/50 transition-all duration-300 banner-dot cursor-pointer';
+    if (i === 0) dot.classList.add('bg-white','w-5','rounded-full');
+    dot.onclick = () => home_vitrine_irBanner(i);
+    dots.appendChild(dot);
+  }
+  home_vitrine_bannerInterval = setInterval(() => {
+    home_vitrine_bannerIdx = (home_vitrine_bannerIdx + 1) % total;
+    home_vitrine_atualizarBanner();
+  }, 4000);
+}
+
+function home_vitrine_irBanner(idx) {
+  home_vitrine_bannerIdx = idx;
+  home_vitrine_atualizarBanner();
+  clearInterval(home_vitrine_bannerInterval);
+  home_vitrine_bannerInterval = setInterval(() => {
+    home_vitrine_bannerIdx = (home_vitrine_bannerIdx + 1) % 3;
+    home_vitrine_atualizarBanner();
+  }, 4000);
+}
+
+function home_vitrine_atualizarBanner() {
+  const container = document.getElementById('banner-container');
+  if (!container) return;
+  container.style.transform = `translateX(-${home_vitrine_bannerIdx * 100}%)`;
+  document.querySelectorAll('.banner-dot').forEach((dot, i) => {
+    dot.classList.remove('bg-white','w-5','rounded-full');
+    dot.classList.add('bg-white/50','w-2');
+    if (i === home_vitrine_bannerIdx) {
+      dot.classList.remove('bg-white/50','w-2');
+      dot.classList.add('bg-white','w-5','rounded-full');
+    }
+  });
+}
+
+function home_vitrine_renderProdutos() {
+  const container = document.getElementById('produtos-destaque');
+  if (!container) return;
+  container.innerHTML = home_vitrine_produtos.map(p => `
+    <div class="flex-shrink-0 w-[155px] bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden active:scale-[0.97] transition-all cursor-pointer" onclick="mostrarTela('detalhe-produto')">
+      <div class="h-[100px] flex items-center justify-center relative" style="background:${home_vitrine_imagensProduto[p.imagem] || 'linear-gradient(145deg,#e5e7eb,#9ca3af)'}">
+        <svg class="w-12 h-12 text-white/40" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+        ${p.freteGratis ? '<span class="absolute top-2 left-2 bg-green-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md">Frete grátis</span>' : ''}
+        <button onclick="event.stopPropagation(); home_vitrine_adicionarCarrinho(${p.id})" class="absolute bottom-2 right-2 w-7 h-7 bg-white rounded-full shadow flex items-center justify-center active:scale-90 transition-all hover:bg-marca-50">
+          <svg class="w-4 h-4 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        </button>
+      </div>
+      <div class="p-2.5">
+        <p class="text-xs text-gray-800 font-body font-medium leading-snug line-clamp-2 h-8">${p.nome}</p>
+        <div class="flex items-center gap-1 mt-1">
+          <svg class="w-3 h-3 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="text-[10px] text-gray-500 font-body">${p.avaliacao}</span>
+          <span class="text-[10px] text-gray-300 font-body">|</span>
+          <span class="text-[10px] text-gray-400 font-body">${p.vendas} vendas</span>
+        </div>
+        <div class="flex items-baseline gap-1.5 mt-1">
+          <span class="text-sm font-display font-bold text-emerald-600">${brl(p.preco)}</span>
+          ${p.precoAntigo ? `<span class="text-[10px] text-gray-400 line-through">${brl(p.precoAntigo)}</span>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function home_vitrine_renderServicos() {
+  const container = document.getElementById('servicos-lista');
+  if (!container) return;
+  container.innerHTML = home_vitrine_servicos.map(s => `
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-3.5 flex gap-3.5 items-center active:scale-[0.98] transition-all cursor-pointer" onclick="mostrarTela('agendar-servico')">
+      <div class="w-16 h-16 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:${home_vitrine_imagensServico[s.imagem] || 'linear-gradient(145deg,#e5e7eb,#9ca3af)'}">
+        <svg class="w-8 h-8 text-white/50" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <h4 class="text-sm font-display font-bold text-gray-900 truncate">${s.nome}</h4>
+        <div class="flex items-center gap-1 mt-0.5">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="text-xs text-gray-600 font-body font-medium">${s.nota}</span>
+          <span class="text-[10px] text-gray-400 font-body">(${s.avaliacoes})</span>
+          <span class="text-[10px] text-gray-300 font-body">·</span>
+          <span class="text-[10px] text-gray-400 font-body">${s.distancia}</span>
+        </div>
+        <div class="flex items-center gap-2 mt-1.5">
+          <span class="text-xs text-emerald-600 font-display font-bold">${brl(s.preco)}</span>
+          <span class="text-[10px] text-gray-400 font-body">${s.duracao}</span>
+        </div>
+      </div>
+      <button class="flex-shrink-0 w-9 h-9 rounded-xl bg-marca-50 flex items-center justify-center active:scale-90 transition-all hover:bg-marca-100" onclick="event.stopPropagation(); mostrarTela('agendar-servico')">
+        <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  `).join('');
+}
+
+function home_vitrine_adicionarCarrinho(id) {
+  const produto = home_vitrine_produtos.find(p => p.id === id);
+  if (!produto) return;
+  const badge = document.getElementById('cart-badge-home');
+  if (badge) {
+    const current = parseInt(badge.textContent) || 0;
+    badge.textContent = current + 1;
+    badge.classList.add('animate-bounce');
+    setTimeout(() => badge.classList.remove('animate-bounce'), 600);
+  }
+  toast(`${produto.nome} adicionado ao carrinho!`, 'ok');
+}
+
+function home_vitrine_abrirCategoria(categoria) {
+  mostrarTela('catalogo-completo');
+}
+
+const home_vitrine_sugestoes = ["Ração Golden", "Shampoo antipulgas", "Coleira antipulgas", "Areia sanitária", "Brinquedos para cães", "Ração para gatos", "Vermífugo", "Vacina V10", "Petiscos naturais", "Cama pet"];
+
+function home_vitrine_buscar(termo) {
+  const suggestionsEl = document.getElementById('search-suggestions');
+  if (!termo.trim()) { suggestionsEl.classList.add('hidden'); return; }
+  const filtrados = home_vitrine_sugestoes.filter(s => s.toLowerCase().includes(termo.toLowerCase()));
+  if (filtrados.length === 0) { suggestionsEl.classList.add('hidden'); return; }
+  suggestionsEl.innerHTML = filtrados.map(s => `
+    <button onclick="home_vitrine_selecionarSugestao('${s}')" class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-marca-50 active:bg-marca-100 transition-colors font-body flex items-center gap-2.5">
+      <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      ${s}
+    </button>
+  `).join('');
+  suggestionsEl.classList.remove('hidden');
+}
+
+function home_vitrine_selecionarSugestao(termo) {
+  document.getElementById('search-input').value = termo;
+  document.getElementById('search-suggestions').classList.add('hidden');
+  home_vitrine_executarBusca(termo);
+}
+
+function home_vitrine_executarBusca(termo) {
+  const resultados = home_vitrine_produtos.filter(p => p.nome.toLowerCase().includes(termo.toLowerCase()));
+  const overlay = document.getElementById('search-results-overlay');
+  const lista = document.getElementById('search-results-list');
+  if (resultados.length === 0) {
+    lista.innerHTML = `
+      <div class="text-center py-10">
+        <svg class="w-16 h-16 text-gray-200 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <p class="text-sm text-gray-500 font-body">Nenhum resultado para "${termo}"</p>
+        <p class="text-xs text-gray-400 font-body mt-1">Tente outro termo ou navegue pelo catálogo</p>
+      </div>`;
+  } else {
+    lista.innerHTML = resultados.map(p => `
+      <div class="flex gap-3 items-center p-3 rounded-xl hover:bg-gray-50 active:bg-marca-50 transition-colors cursor-pointer" onclick="mostrarTela('detalhe-produto'); home_vitrine_fecharBusca();">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style="background:${home_vitrine_imagensProduto[p.imagem] || '#e5e7eb'}">
+          <svg class="w-7 h-7 text-white/40" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-body font-medium text-gray-900 truncate">${p.nome}</p>
+          <span class="text-[10px] text-gray-400 font-body">${p.categoria}</span>
+          <div class="flex items-center gap-1.5 mt-1">
+            <span class="text-sm font-display font-bold text-emerald-600">${brl(p.preco)}</span>
+            ${p.precoAntigo ? `<span class="text-[10px] text-gray-400 line-through">${brl(p.precoAntigo)}</span>` : ''}
+          </div>
+        </div>
+        ${p.freteGratis ? '<span class="badge text-[9px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-md font-bold flex-shrink-0">Frete grátis</span>' : ''}
+      </div>
+    `).join('');
+  }
+  overlay.classList.remove('hidden');
+}
+
+function home_vitrine_fecharBusca(e) {
+  if (e && e.target !== e.currentTarget) return;
+  const overlay = document.getElementById('search-results-overlay');
+  if (overlay) { overlay.classList.add('hidden'); }
+  const input = document.getElementById('search-input');
+  if (input) { input.value = ''; }
+  const sug = document.getElementById('search-suggestions');
+  if (sug) { sug.classList.add('hidden'); }
+}
+
+home_vitrine_renderProdutos();
+home_vitrine_renderServicos();
+home_vitrine_iniciarBanner();
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') home_vitrine_fecharBusca();
+});
+</script>
+
     <!-- TELAS -->
   </main>
 
