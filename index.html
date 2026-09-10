@@ -1987,6 +1987,342 @@ document.addEventListener('keydown', (e) => {
   </script>
 </section>
 
+    <section data-tela="meus-pets" class="hidden">
+  <div class="px-4 py-4 space-y-4">
+    <div>
+      <h2 class="font-display text-xl font-bold text-gray-900">Meus Pets</h2>
+      <p class="text-sm text-gray-500 mt-0.5">Gerencie os pets cadastrados na sua conta</p>
+    </div>
+
+    <div id="lista-pets" class="grid grid-cols-2 gap-3"></div>
+
+    <div id="vazio-pets" class="hidden text-center py-10">
+      <svg class="w-16 h-16 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.5l1.318-1.182a4.5 4.5 0 116.364 6.364L12 20.25l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
+      <p class="text-gray-500 mt-3 text-sm">Nenhum pet cadastrado</p>
+      <p class="text-gray-400 text-xs mt-1">Toque no + para adicionar</p>
+    </div>
+
+    <button id="btn-novo-pet" class="w-full bg-marca-600 hover:bg-marca-700 active:scale-[0.97] text-white font-semibold py-3.5 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-marca-600/20">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+      Cadastrar Pet
+    </button>
+  </div>
+
+  <div id="modal-pet" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="modal-pet-backdrop"></div>
+    <div class="relative bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-[400px] max-h-[90vh] overflow-y-auto shadow-2xl transform transition-transform">
+      <div class="sticky top-0 bg-white z-10 flex items-center justify-between p-4 border-b border-gray-100">
+        <h3 id="modal-pet-titulo" class="font-display text-lg font-bold text-gray-900">Novo Pet</h3>
+        <button id="btn-fechar-modal-pet" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="form-pet" class="p-4 space-y-4">
+        <input type="hidden" id="pet-id" value="">
+        <div class="flex justify-center mb-4">
+          <div class="w-20 h-20 rounded-full bg-marca-100 flex items-center justify-center text-marca-600 font-display text-2xl font-bold" id="pet-avatar">?</div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Pet *</label>
+          <input type="text" id="pet-nome" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all text-gray-900" placeholder="Ex: Max">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Espécie *</label>
+            <select id="pet-especie" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all text-gray-900 bg-white">
+              <option value="">Selecione</option>
+              <option value="Cachorro">Cachorro</option>
+              <option value="Gato">Gato</option>
+              <option value="Ave">Ave</option>
+              <option value="Coelho">Coelho</option>
+              <option value="Roedor">Roedor</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Raça *</label>
+            <input type="text" id="pet-raca" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all text-gray-900" placeholder="Ex: Golden">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Data de Nascimento</label>
+            <input type="date" id="pet-nascimento" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all text-gray-900">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Peso (kg)</label>
+            <input type="number" id="pet-peso" step="0.1" min="0" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all text-gray-900" placeholder="Ex: 12">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Cor</label>
+            <input type="text" id="pet-cor" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all text-gray-900" placeholder="Ex: Caramelo">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Castrado</label>
+            <select id="pet-castrado" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all text-gray-900 bg-white">
+              <option value="sim">Sim</option>
+              <option value="nao">Não</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Alergias</label>
+          <textarea id="pet-alergias" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all text-gray-900 resize-none" placeholder="Ex: alergia a proteína de frango"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-marca-600 hover:bg-marca-700 active:scale-[0.97] text-white font-semibold py-3.5 rounded-2xl transition-all shadow-lg shadow-marca-600/20">Salvar Pet</button>
+      </form>
+    </div>
+  </div>
+</section>
+```
+
+<style>
+  .tab-btn-active{background:#0d9488;color:#fff;}
+  .tab-btn-idle{background:#f3f4f6;color:#4b5563;}
+</style>
+
+<script>
+(function(){
+  const petsData=[
+    {id:1,nome:'Max',especie:'Cachorro',raca:'Golden Retriever',nascimento:'2021-03-15',peso:32,cor:'Dourado',castrado:'sim',alergias:'Nenhuma',avatar:'M',avatarBg:'#f59e0b'},
+    {id:2,nome:'Luna',especie:'Gato',raca:'Siames',nascimento:'2022-07-08',peso:4.5,cor:'Creme e marrom',castrado:'sim',alergias:'Alergia a grama',avatar:'L',avatarBg:'#8b5cf6'},
+    {id:3,nome:'Thor',especie:'Cachorro',raca:'Bulldog Francês',nascimento:'2020-11-20',peso:11,cor:'Tigrado',castrado:'sim',alergias:'Alergia a carne de frango',avatar:'T',avatarBg:'#ef4444'}
+  ];
+
+  const vacinasData={
+    1:[{nome:'V10',data:'2024-01-15',vencimento:'2025-01-15',dose:'Reforço'},{nome:'Antirrábica',data:'2024-03-20',vencimento:'2025-03-20',dose:'Anual'},{nome:'Gripe Canina',data:'2024-02-10',vencimento:'2024-08-10',dose:'Semestral'}],
+    2:[{nome:'V4 Felina',data:'2024-04-05',vencimento:'2025-04-05',dose:'Reforço'},{nome:'Antirrábica',data:'2024-04-05',vencimento:'2025-04-05',dose:'Anual'},{nome:'FeLV',data:'2023-09-12',vencimento:'2024-09-12',dose:'Anual'}],
+    3:[{nome:'V10',data:'2024-06-01',vencimento:'2025-06-01',dose:'Reforço'},{nome:'Antirrábica',data:'2024-06-01',vencimento:'2025-06-01',dose:'Anual'},{nome:'Gripe Canina',data:'2024-06-01',vencimento:'2024-12-01',dose:'Semestral'}]
+  };
+
+  const historicoData={
+    1:[{tipo:'Consulta',data:'2024-11-10',desc:'Consulta de rotina - Dr. Carlos',local:'Clínica PetCare'},{tipo:'Banho',data:'2024-11-05',desc:'Banho e tosa completa',local:'PetShop Estilo'},{tipo:'Compra',data:'2024-10-28',desc:'Ração Golden Premium 15kg',valor:289.90},{tipo:'Agendamento',data:'2024-12-15',desc:'Vacina Antirrábica',local:'Clínica PetCare'},{tipo:'Consulta',data:'2024-09-22',desc:'Exame de sangue - check-up',local:'Clínica PetCare'}],
+    2:[{tipo:'Consulta',data:'2024-10-18',desc:'Consulta oftalmológica - Dra. Ana',local:'Clínica PetCare'},{tipo:'Banho',data:'2024-11-01',desc:'Banho hidratante',local:'PetShop Estilo'},{tipo:'Compra',data:'2024-10-10',desc:'Ração premium para gatos 3kg',valor:129.90},{tipo:'Agendamento',data:'2024-12-20',desc:'Vacina V4 Felina',local:'Clínica PetCare'}],
+    3:[{tipo:'Consulta',data:'2024-11-02',desc:'Limpeza dental - Dr. Carlos',local:'Clínica PetCare'},{tipo:'Banho',data:'2024-11-08',desc:'Banho medicinal',local:'PetShop Estilo'},{tipo:'Compra',data:'2024-10-15',desc:'Ração especial para Bulldogs 12kg',valor:219.90},{tipo:'Agendamento',data:'2024-12-18',desc:'Retorno dental',local:'Clínica PetCare'},{tipo:'Compra',data:'2024-09-30',desc:'Brinquedo de borracha',valor:29.90},{tipo:'Consulta',data:'2024-08-14',desc:'Check-up dermatológico',local:'Clínica PetCare'}]
+  };
+
+  const fotosData={
+    1:['🐕','🦮','🏞️','🐾','🎾','🏖️'],
+    2:['🐈','😺','🧶','😻','🐾','🛋️'],
+    3:['🐶','🛏️','🎾','🐾','🦴','😍']
+  };
+
+  const tipoIcon={Consulta:'🏥',Banho:'🛁',Compra:'🛒',Agendamento:'📅'};
+  const tipoCor={Consulta:'bg-blue-100 text-blue-700',Banho:'bg-purple-100 text-purple-700',Compra:'bg-emerald-100 text-emerald-700',Agendamento:'bg-amber-100 text-amber-700'};
+
+  function calcIdade(nasc){
+    if(!nasc)return'—';
+    const d=new Date(nasc),now=new Date(),a=now.getFullYear()-d.getFullYear(),m=now.getMonth()-d.getMonth();
+    return m<0||(m===0&&now.getDate()<d.getDate())?`${a-1} ano(s)`:`${a} ano(s)`;
+  }
+  function dataBR(iso){
+    if(!iso)return'—';
+    const[d,m,y]=iso.split('-');
+    return`${d}/${m}/${y}`;
+  }
+  function diasVenc(venc){
+    if(!venc)return'';
+    const v=new Date(venc+'T00:00:00'),now=new Date(),diff=Math.ceil((v-now)/(1000*60*60*24));
+    if(diff<0)return'<span class="text-red-600 font-medium text-xs">Vencida</span>';
+    if(diff<=30)return'<span class="text-amber-600 font-medium text-xs">Vence em '+diff+' dias</span>';
+    return'<span class="text-emerald-600 font-medium text-xs">Em dia</span>';
+  }
+
+  function renderLista(){
+    const c=document.getElementById('lista-pets'),v=document.getElementById('vazio-pets');
+    if(!petsData.length){c.innerHTML='';v.classList.remove('hidden');return;}
+    v.classList.add('hidden');
+    c.innerHTML=petsData.map(p=>`
+      <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-marca-200 transition-all cursor-pointer active:scale-[0.97] meus_pets-card" data-pet-id="${p.id}">
+        <div class="flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-display text-xl font-bold mb-2 shadow-md" style="background:${p.avatarBg}">${p.avatar}</div>
+          <h3 class="font-display font-bold text-gray-900 text-sm">${p.nome}</h3>
+          <p class="text-xs text-gray-500 mt-0.5">${p.especie} · ${p.raca}</p>
+          <div class="flex items-center gap-2 mt-2">
+            <span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-full font-medium">${calcIdade(p.nascimento)}</span>
+            <span class="bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-full font-medium">${p.peso}kg</span>
+          </div>
+          <p class="text-[10px] text-gray-400 mt-1.5 capitalize">${p.cor.toLowerCase()}</p>
+        </div>
+      </div>
+    `).join('');
+    c.querySelectorAll('.meus_pets-card').forEach(card=>{
+      card.addEventListener('click',()=>abrirDetalhePet(parseInt(card.dataset.petId)));
+    });
+  }
+
+  function abrirDetalhePet(petId){
+    const p=petsData.find(x=>x.id===petId);
+    if(!p)return;
+    const vacinas=vacinasData[p.id]||[];
+    const hist=historicoData[p.id]||[];
+    const fotos=fotosData[p.id]||[];
+
+    const vacinasHtml=vacinas.map(v=>{
+      const vencida=v.vencimento&&new Date(v.vencimento+'T00:00:00')<new Date();
+      return`<div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full ${vencida?'bg-red-100':'bg-marca-100'} flex items-center justify-center text-lg">💉</div>
+          <div>
+            <p class="text-sm font-medium text-gray-900">${v.nome}</p>
+            <p class="text-xs text-gray-500">${v.dose} · Aplicada em ${dataBR(v.data)}</p>
+          </div>
+        </div>
+        <div class="text-right">${diasVenc(v.vencimento)}<p class="text-[10px] text-gray-400">Vence ${dataBR(v.vencimento)}</p></div>
+      </div>`;
+    }).join('')||'<p class="text-center text-gray-400 text-sm py-8">Nenhuma vacina registrada</p>';
+
+    const histHtml=hist.map(h=>`
+      <div class="flex items-start gap-3 py-3 border-b border-gray-100 last:border-0">
+        <div class="w-10 h-10 rounded-full ${tipoCor[h.tipo]||'bg-gray-100 text-gray-600'} flex items-center justify-center text-lg shrink-0">${tipoIcon[h.tipo]||'📋'}</div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-medium text-gray-900">${h.desc}</p>
+          <p class="text-xs text-gray-500">${h.local||''}</p>
+        </div>
+        <div class="text-right shrink-0">
+          <p class="text-xs font-medium text-gray-700">${dataBR(h.data)}</p>
+          ${h.valor?`<p class="text-xs text-emerald-600 font-semibold">R$ ${h.valor.toFixed(2).replace('.',',')}</p>`:''}
+        </div>
+      </div>
+    `).join('')||'<p class="text-center text-gray-400 text-sm py-8">Nenhum histórico registrado</p>';
+
+    const fotosHtml=fotos.map(f=>`
+      <div class="w-full aspect-square rounded-2xl bg-gradient-to-br from-marca-100 to-marca-50 flex items-center justify-center text-4xl shadow-sm border border-marca-100">${f}</div>
+    `).join('');
+
+    const infoHtml=`
+      <div class="space-y-3">
+        <div class="flex justify-between py-2 border-b border-gray-100"><span class="text-sm text-gray-500">Espécie</span><span class="text-sm font-medium text-gray-900">${p.especie}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-100"><span class="text-sm text-gray-500">Raça</span><span class="text-sm font-medium text-gray-900">${p.raca}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-100"><span class="text-sm text-gray-500">Idade</span><span class="text-sm font-medium text-gray-900">${calcIdade(p.nascimento)}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-100"><span class="text-sm text-gray-500">Peso</span><span class="text-sm font-medium text-gray-900">${p.peso} kg</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-100"><span class="text-sm text-gray-500">Cor</span><span class="text-sm font-medium text-gray-900 capitalize">${p.cor}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-100"><span class="text-sm text-gray-500">Castrado</span><span class="text-sm font-medium text-gray-900 capitalize">${p.castrado}</span></div>
+        <div class="py-2"><span class="text-sm text-gray-500 block mb-1">Alergias</span><span class="text-sm font-medium text-gray-900">${p.alergias||'Nenhuma'}</span></div>
+      </div>
+    `;
+
+    const html=`
+      <div class="flex flex-col items-center mb-4">
+        <div class="w-20 h-20 rounded-full flex items-center justify-center text-white font-display text-2xl font-bold shadow-lg mb-2" style="background:${p.avatarBg}">${p.avatar}</div>
+        <h2 class="font-display text-xl font-bold text-gray-900">${p.nome}</h2>
+        <p class="text-sm text-gray-500">${p.especie} · ${p.raca}</p>
+      </div>
+      <div class="flex rounded-xl overflow-hidden mb-4 border border-gray-200">
+        <button data-tab="info" class="tab-btn-active flex-1 py-2 text-xs font-semibold transition-all">Informações</button>
+        <button data-tab="vacinas" class="tab-btn-idle flex-1 py-2 text-xs font-semibold transition-all">Vacinas</button>
+        <button data-tab="historico" class="tab-btn-idle flex-1 py-2 text-xs font-semibold transition-all">Histórico</button>
+        <button data-tab="fotos" class="tab-btn-idle flex-1 py-2 text-xs font-semibold transition-all">Fotos</button>
+      </div>
+      <div id="tab-content-info" class="tab-panel">${infoHtml}</div>
+      <div id="tab-content-vacinas" class="tab-panel hidden">${vacinasHtml}</div>
+      <div id="tab-content-historico" class="tab-panel hidden">${histHtml}</div>
+      <div id="tab-content-fotos" class="tab-panel hidden"><div class="grid grid-cols-3 gap-2">${fotosHtml}</div></div>
+      <div class="flex gap-2 mt-5">
+        <button onclick="window._editarPet(${p.id})" class="flex-1 bg-marca-600 hover:bg-marca-700 active:scale-[0.97] text-white font-semibold py-3 rounded-xl transition-all text-sm shadow-md">Editar</button>
+        <button onclick="window._agendarPet(${p.id},'${p.nome}')" class="flex-1 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.97] text-white font-semibold py-3 rounded-xl transition-all text-sm shadow-md">Agendar</button>
+      </div>
+    `;
+    abrirModal(html, '');
+    document.querySelectorAll('.tab-btn-idle, .tab-btn-active').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const tab=btn.dataset.tab;
+        document.querySelectorAll('.tab-btn-idle, .tab-btn-active').forEach(b=>{b.className=b===btn?'tab-btn-active flex-1 py-2 text-xs font-semibold transition-all':'tab-btn-idle flex-1 py-2 text-xs font-semibold transition-all';});
+        document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
+        const panel=document.getElementById('tab-content-'+tab);
+        if(panel)panel.classList.remove('hidden');
+      });
+    });
+  }
+
+  document.getElementById('btn-novo-pet').addEventListener('click',()=>{
+    document.getElementById('pet-id').value='';
+    document.getElementById('form-pet').reset();
+    document.getElementById('modal-pet-titulo').textContent='Novo Pet';
+    document.getElementById('pet-avatar').textContent='?';
+    document.getElementById('pet-avatar').style.background='#e5e7eb';
+    document.getElementById('pet-avatar').style.color='#9ca3af';
+    document.getElementById('modal-pet').classList.remove('hidden');
+  });
+
+  document.getElementById('btn-fechar-modal-pet').addEventListener('click',()=>{
+    document.getElementById('modal-pet').classList.add('hidden');
+  });
+  document.getElementById('modal-pet-backdrop').addEventListener('click',()=>{
+    document.getElementById('modal-pet').classList.add('hidden');
+  });
+
+  ['pet-nome','pet-especie','pet-raca'].forEach(id=>{
+    document.getElementById(id).addEventListener('input',updateAvatar);
+  });
+
+  function updateAvatar(){
+    const nome=document.getElementById('pet-nome').value.trim();
+    const avatarEl=document.getElementById('pet-avatar');
+    if(nome){avatarEl.textContent=nome.charAt(0).toUpperCase();avatarEl.style.background='#0d9488';avatarEl.style.color='#fff';}
+    else{avatarEl.textContent='?';avatarEl.style.background='#e5e7eb';avatarEl.style.color='#9ca3af';}
+  }
+
+  document.getElementById('form-pet').addEventListener('submit',function(e){
+    e.preventDefault();
+    const id=document.getElementById('pet-id').value;
+    const nome=document.getElementById('pet-nome').value.trim();
+    const especie=document.getElementById('pet-especie').value;
+    const raca=document.getElementById('pet-raca').value.trim();
+    const nascimento=document.getElementById('pet-nascimento').value;
+    const peso=parseFloat(document.getElementById('pet-peso').value)||0;
+    const cor=document.getElementById('pet-cor').value.trim();
+    const castrado=document.getElementById('pet-castrado').value;
+    const alergias=document.getElementById('pet-alergias').value.trim();
+    const cores=['#f59e0b','#8b5cf6','#ef4444','#10b981','#3b82f6','#ec4899','#f97316','#14b8a6'];
+    if(id){
+      const p=petsData.find(x=>x.id===parseInt(id));
+      if(p){Object.assign(p,{nome,especie,raca,nascimento,peso,cor,castrado,alergias,avatar:nome.charAt(0).toUpperCase(),avatarBg:cores[Math.floor(Math.random()*cores.length)]});}
+      toast('Pet atualizado com sucesso!','ok');
+    }else{
+      const newId=Math.max(...petsData.map(x=>x.id),0)+1;
+      petsData.push({id:newId,nome,especie,raca,nascimento,peso,cor,castrado,alergias,avatar:nome.charAt(0).toUpperCase(),avatarBg:cores[Math.floor(Math.random()*cores.length)]});
+      if(!vacinasData[newId])vacinasData[newId]=[];
+      if(!historicoData[newId])historicoData[newId]=[];
+      if(!fotosData[newId])fotosData[newId]=['🐾','🏠','🦴','🎾','🐕','😊'];
+      toast('Pet cadastrado com sucesso!','ok');
+    }
+    document.getElementById('modal-pet').classList.add('hidden');
+    renderLista();
+  });
+
+  window._editarPet=function(petId){
+    const p=petsData.find(x=>x.id===petId);
+    if(!p)return;
+    document.getElementById('pet-id').value=p.id;
+    document.getElementById('pet-nome').value=p.nome;
+    document.getElementById('pet-especie').value=p.especie;
+    document.getElementById('pet-raca').value=p.raca;
+    document.getElementById('pet-nascimento').value=p.nascimento;
+    document.getElementById('pet-peso').value=p.peso;
+    document.getElementById('pet-cor').value=p.cor;
+    document.getElementById('pet-castrado').value=p.castrado;
+    document.getElementById('pet-alergias').value=p.alergias;
+    document.getElementById('modal-pet-titulo').textContent='Editar Pet';
+    const avatarEl=document.getElementById('pet-avatar');
+    avatarEl.textContent=p.avatar;
+    avatarEl.style.background=p.avatarBg;
+    avatarEl.style.color='#fff';
+    document.getElementById('modal-pet').classList.remove('hidden');
+  };
+
+  window._agendarPet=function(petId,petNome){
+    fecharModal();
+    toast('Agendamento para '+petNome+' — redirecionando...','info');
+    setTimeout(()=>mostrarTela('agendar-servico'),800);
+  };
+
+  renderLista();
+})();
+</script>
+
     <!-- TELAS -->nbsp;<span id="carrinho-agendamento-preco">85,00</span></span>
           <button class="mt-1 text-xs text-error-600 font-medium underline decoration-1 hover:text-error-700 transition" onclick="carrinho_removerAgendamento()">Remover</button>
         </div>
