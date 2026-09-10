@@ -640,6 +640,286 @@ document.addEventListener('keydown', (e) => {
 });
 </script>
 
+    <section data-tela="catalogo-completo" class="hidden">
+  <div class="max-w-[430px] mx-auto min-h-screen flex flex-col">
+    <div class="px-4 pt-4 pb-2">
+      <div class="relative">
+        <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="catalogo-completo-busca" type="text" placeholder="Buscar produtos, marcas..." class="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-2xl text-sm font-body focus:outline-none focus:ring-2 focus:ring-marca-400 focus:bg-white transition-all placeholder:text-gray-400" oninput="catalogo_completo_filtrar()">
+        <button onclick="catalogo_completo_limparBusca()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden" id="catalogo-completo-limpa-busca">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="flex items-center justify-between px-4 py-2">
+      <p class="text-xs text-gray-500 font-body" id="catalogo-completo-contador">10 produtos</p>
+      <div class="relative">
+        <button onclick="catalogo_completo_toggleSort()" class="flex items-center gap-1.5 text-xs font-body text-marca-700 font-semibold bg-marca-50 px-3 py-1.5 rounded-full hover:bg-marca-100 transition-colors active:scale-95">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M7 12h10M10 18h4"/></svg>
+          <span id="catalogo-completo-sort-label">Popularidade</span>
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="catalogo-completo-sort-dropdown" class="hidden absolute right-0 top-full mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 w-48 z-30 overflow-hidden">
+          <button onclick="catalogo_completo_setSort('popularidade')" class="sort-option w-full text-left px-4 py-2.5 text-sm font-body hover:bg-marca-50 transition-colors text-marca-700 font-medium" data-sort="popularidade">Popularidade</button>
+          <button onclick="catalogo_completo_setSort('menor-preco')" class="sort-option w-full text-left px-4 py-2.5 text-sm font-body hover:bg-marca-50 transition-colors text-gray-600" data-sort="menor-preco">Menor preço</button>
+          <button onclick="catalogo_completo_setSort('maior-preco')" class="sort-option w-full text-left px-4 py-2.5 text-sm font-body hover:bg-marca-50 transition-colors text-gray-600" data-sort="maior-preco">Maior preço</button>
+          <button onclick="catalogo_completo_setSort('lancamentos')" class="sort-option w-full text-left px-4 py-2.5 text-sm font-body hover:bg-marca-50 transition-colors text-gray-600" data-sort="lancamentos">Lançamentos</button>
+        </div>
+      </div>
+    </div>
+    <div id="catalogo-completo-filtros-ativos" class="hidden px-4 pb-2 flex gap-2 overflow-x-auto">
+    </div>
+    <div class="flex-1 overflow-y-auto px-4 pb-24" id="catalogo-completo-grid-container">
+      <div class="grid grid-cols-2 gap-3" id="catalogo-completo-grid">
+      </div>
+      <div id="catalogo-completo-vazio" class="hidden flex flex-col items-center justify-center py-16 text-center">
+        <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+          <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6"/></svg>
+        </div>
+        <p class="font-display font-semibold text-gray-700 text-sm">Nenhum produto encontrado</p>
+        <p class="text-xs text-gray-400 mt-1 font-body">Tente ajustar os filtros ou a busca</p>
+        <button onclick="catalogo_completo_resetarFiltros()" class="mt-4 px-5 py-2 bg-marca-600 text-white text-xs font-body font-semibold rounded-full hover:bg-marca-700 transition-colors active:scale-95">Limpar filtros</button>
+      </div>
+    </div>
+    <button onclick="catalogo_completo_abrirFiltros()" class="fixed bottom-6 right-4 z-20 w-14 h-14 bg-marca-600 rounded-full shadow-lg shadow-marca-600/30 flex items-center justify-center hover:bg-marca-700 transition-all active:scale-90" style="max-width:430px;right:calc((100% - 430px)/2 + 16px);" id="catalogo-completo-btn-flutuante">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      <span id="catalogo-completo-badge-filtros" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-amber-400 text-white text-[10px] font-bold rounded-full flex items-center justify-center">0</span>
+    </button>
+  </div>
+  <div id="catalogo-completo-overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300" onclick="catalogo_completo_fecharFiltros()"></div>
+  <div id="catalogo-completo-sidebar" class="fixed top-0 left-0 h-full w-80 bg-white z-50 shadow-2xl -translate-x-full transition-transform duration-300 ease-out flex flex-col" style="max-width:80vw;">
+    <div class="flex items-center justify-between p-5 border-b border-gray-100">
+      <h3 class="font-display font-bold text-lg text-gray-900">Filtros</h3>
+      <button onclick="catalogo_completo_fecharFiltros()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors active:scale-90">
+        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-5 space-y-6">
+      <div>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-body mb-3">Espécie</p>
+        <div class="space-y-2.5" id="catalogo-completo-filtro-especie"></div>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-body mb-3">Categoria</p>
+        <div class="space-y-2.5" id="catalogo-completo-filtro-categoria"></div>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-body mb-3">Faixa de preço</p>
+        <div class="space-y-2.5" id="catalogo-completo-filtro-preco"></div>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-body mb-3">Marca</p>
+        <div class="space-y-2.5" id="catalogo-completo-filtro-marca"></div>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-body mb-3">Idade do pet</p>
+        <div class="space-y-2.5" id="catalogo-completo-filtro-idade"></div>
+      </div>
+    </div>
+    <div class="p-5 border-t border-gray-100 space-y-2">
+      <button onclick="catalogo_completo_aplicarFiltros()" class="w-full py-3.5 bg-marca-600 text-white font-body font-semibold text-sm rounded-2xl hover:bg-marca-700 transition-colors active:scale-95">Aplicar filtros</button>
+      <button onclick="catalogo_completo_resetarFiltros()" class="w-full py-3 bg-gray-100 text-gray-600 font-body font-semibold text-sm rounded-2xl hover:bg-gray-200 transition-colors active:scale-95">Limpar tudo</button>
+    </div>
+  </div>
+  <script>
+    const catalogo_completo_produtos = [
+      { id:1, nome:'Ração Premium Cães Adultos', marca:'Royal Canin', especie:'cachorro', categoria:'racao', preco:189.90, peso:'15kg', avaliacao:4.8, reviews:127, idade:'adulto', destaque:true, cor:'bg-amber-100', icone:'🦴', data:'2024-11-20' },
+      { id:2, nome:'Ração Gatos Filhotes', marca:'Premier', especie:'gato', categoria:'racao', preco:89.90, peso:'3kg', avaliacao:4.9, reviews:203, idade:'filhote', destaque:false, cor:'bg-orange-50', icone:'🐱', data:'2025-01-05' },
+      { id:3, nome:'Shampoo Neutro para Cães', marca:'Pet Society', especie:'cachorro', categoria:'higiene', preco:34.90, peso:'500ml', avaliacao:4.6, reviews:89, idade:'todas', destaque:false, cor:'bg-sky-50', icone:'🧴', data:'2024-09-15' },
+      { id:4, nome:'Areia Sanitária Gatos', marca:'Gran Plus', especie:'gato', categoria:'higiene', preco:42.90, peso:'4kg', avaliacao:4.5, reviews:156, idade:'todas', destaque:false, cor:'bg-stone-100', icone:'🏺', data:'2024-08-01' },
+      { id:5, nome:'Brinquedo Mordedor Borracha', marca:'Kong', especie:'cachorro', categoria:'brinquedos', preco:59.90, peso:'único', avaliacao:4.7, reviews:312, idade:'filhote', destaque:true, cor:'bg-red-50', icone:'🎾', data:'2025-02-10' },
+      { id:6, nome:'Coleira Ajustável Neon', marca:'Ferplast', especie:'cachorro', categoria:'acessorios', preco:45.90, peso:'tamanho M', avaliacao:4.4, reviews:67, idade:'todas', destaque:false, cor:'bg-lime-50', icone:'🎀', data:'2024-12-01' },
+      { id:7, nome:'Ração Pássaros Canários', marca:'Nutropica', especie:'passaro', categoria:'racao', preco:28.90, peso:'750g', avaliacao:4.3, reviews:45, idade:'todas', destaque:false, cor:'bg-yellow-50', icone:'🐦', data:'2024-10-20' },
+      { id:8, nome:'Suplemento Articular Cães', marca:'Vetnil', especie:'cachorro', categoria:'medicamentos', preco:79.90, peso:'30 comprimidos', avaliacao:4.8, reviews:91, idade:'senior', destaque:false, cor:'bg-teal-50', icone:'💊', data:'2025-03-01' },
+      { id:9, nome:'Cama Conforto Pet Grande', marca:'Chalesco', especie:'cachorro', categoria:'acessorios', preco:149.90, peso:'tamanho G', avaliacao:4.6, reviews:178, idade:'todas', destaque:true, cor:'bg-indigo-50', icone:'🛏️', data:'2025-01-20' },
+      { id:10, nome:'Ração Úmida Gatos Mix', marca:'Whiskas', especie:'gato', categoria:'racao', preco:12.90, peso:'85g x 4 un', avaliacao:4.5, reviews:234, idade:'todas', destaque:false, cor:'bg-pink-50', icone:'🐟', data:'2024-07-15' }
+    ];
+    const catalogo_completo_filtros = { especie:[], categoria:[], preco:[], marca:[], idade:[], busca:'' };
+    const catalogo_completo_sortOpcoes = { popularidade:'Popularidade', 'menor-preco':'Menor preço', 'maior-preco':'Maior preço', lancamentos:'Lançamentos' };
+    let catalogo_completo_sortAtual = 'popularidade';
+    let catalogo_completo_carrinhoCount = 0;
+    const catalogo_completo_especies = ['Cachorro','Gato','Pássaro'];
+    const catalogo_completo_categorias = ['Ração','Acessórios','Higiene','Medicamentos','Brinquedos'];
+    const catalogo_completo_precos = [{label:'Até R$ 50',min:0,max:50},{label:'R$ 50 a R$ 100',min:50,max:100},{label:'R$ 100 a R$ 200',min:100,max:200},{label:'Acima de R$ 200',min:200,minf:Infinity}];
+    const catalogo_completo_marcas = [...new Set(catalogo_completo_produtos.map(p=>p.marca))].sort();
+    const catalogo_completo_idades = ['Filhote','Adulto','Senior','Todas as idades'];
+    const catalogo_completo_especieMap = {cachorro:'Cachorro',gato:'Gato',passaro:'Pássaro'};
+    const catalogo_completo_categoriaMap = {racao:'Ração',acessorios:'Acessórios',higiene:'Higiene',medicamentos:'Medicamentos',brinquedos:'Brinquedos'};
+    function catalogo_completo_init() {
+      const e = document.getElementById('catalogo-completo-filtro-especie');
+      catalogo_completo_especies.forEach(function(sp) {
+        const id = 'filtro-esp-' + sp.toLowerCase();
+        e.innerHTML += '<label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="' + sp.toLowerCase() + '" id="' + id + '" class="w-4 h-4 rounded border-gray-300 text-marca-600 focus:ring-marca-500 cursor-pointer" onchange="catalogo_completo_marcarFiltro(this)"><span class="text-sm font-body text-gray-700 group-hover:text-marca-700 transition-colors">' + sp + '</span></label>';
+      });
+      const c = document.getElementById('catalogo-completo-filtro-categoria');
+      catalogo_completo_categorias.forEach(function(cat) {
+        const id = 'filtro-cat-' + cat.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        c.innerHTML += '<label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="' + cat.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'') + '" id="' + id + '" class="w-4 h-4 rounded border-gray-300 text-marca-600 focus:ring-marca-500 cursor-pointer" onchange="catalogo_completo_marcarFiltro(this)"><span class="text-sm font-body text-gray-700 group-hover:text-marca-700 transition-colors">' + cat + '</span></label>';
+      });
+      const p = document.getElementById('catalogo-completo-filtro-preco');
+      catalogo_completo_precos.forEach(function(pr,i) {
+        p.innerHTML += '<label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="preco-' + i + '" id="filtro-preco-' + i + '" class="w-4 h-4 rounded border-gray-300 text-marca-600 focus:ring-marca-500 cursor-pointer" onchange="catalogo_completo_marcarFiltro(this)"><span class="text-sm font-body text-gray-700 group-hover:text-marca-700 transition-colors">' + pr.label + '</span></label>';
+      });
+      const m = document.getElementById('catalogo-completo-filtro-marca');
+      catalogo_completo_marcas.forEach(function(mr) {
+        const id = 'filtro-mrc-' + mr.toLowerCase().replace(/[^a-z0-9]/g,'');
+        m.innerHTML += '<label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="' + mr + '" id="' + id + '" class="w-4 h-4 rounded border-gray-300 text-marca-600 focus:ring-marca-500 cursor-pointer" onchange="catalogo_completo_marcarFiltro(this)"><span class="text-sm font-body text-gray-700 group-hover:text-marca-700 transition-colors">' + mr + '</span></label>';
+      });
+      const d = document.getElementById('catalogo-completo-filtro-idade');
+      catalogo_completo_idades.forEach(function(id) {
+        const val = id.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'');
+        const label = id === 'Todas as idades' ? 'Todas as idades' : id;
+        d.innerHTML += '<label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="' + val + '" id="filtro-idade-' + val + '" class="w-4 h-4 rounded border-gray-300 text-marca-600 focus:ring-marca-500 cursor-pointer" onchange="catalogo_completo_marcarFiltro(this)"><span class="text-sm font-body text-gray-700 group-hover:text-marca-700 transition-colors">' + label + '</span></label>';
+      });
+      catalogo_completo_render();
+    }
+    function catalogo_completo_marcarFiltro(el) {
+      const parent = el.closest('label');
+      if (el.checked) { parent.classList.add('bg-marca-50'); parent.classList.add('rounded-xl'); parent.classList.add('px-2'); parent.classList.add('-mx-2'); }
+      else { parent.classList.remove('bg-marca-50'); parent.classList.remove('rounded-xl'); parent.classList.remove('px-2'); parent.classList.remove('-mx-2'); }
+    }
+    function catalogo_completo_getFiltrosAtivos() {
+      const ativos = [];
+      document.querySelectorAll('#catalogo-completo-sidebar input[type=checkbox]:checked').forEach(function(cb) { ativos.push({tipo:cb.closest('div').querySelector('p').textContent.toLowerCase().includes('espécie')?'especie':cb.closest('div').querySelector('p').textContent.toLowerCase().includes('categoria')?'categoria':cb.closest('div').querySelector('p').textContent.toLowerCase().includes('preço')?'preco':cb.closest('div').querySelector('p').textContent.toLowerCase().includes('marca')?'marca':'idade', valor:cb.value, label:cb.parentElement.textContent.trim()}); });
+      return ativos;
+    }
+    function catalogo_completo_filtrar() {
+      const busca = document.getElementById('catalogo-completo-busca').value.toLowerCase().trim();
+      catalogo_completo_filtros.busca = busca;
+      document.getElementById('catalogo-completo-limpa-busca').classList.toggle('hidden', !busca);
+      catalogo_completo_render();
+    }
+    function catalogo_completo_limparBusca() {
+      document.getElementById('catalogo-completo-busca').value = '';
+      catalogo_completo_filtros.busca = '';
+      document.getElementById('catalogo-completo-limpa-busca').classList.add('hidden');
+      catalogo_completo_render();
+    }
+    function catalogo_completo_toggleSort() {
+      const dd = document.getElementById('catalogo-completo-sort-dropdown');
+      dd.classList.toggle('hidden');
+      if (!dd.classList.contains('hidden')) { document.addEventListener('click', function fechar(e) { if (!e.target.closest('#catalogo-completo-sort-dropdown') && !e.target.closest('[onclick*=catalogo_completo_toggleSort]')) { dd.classList.add('hidden'); document.removeEventListener('click', fechar); } }); }
+    }
+    function catalogo_completo_setSort(sort) {
+      catalogo_completo_sortAtual = sort;
+      document.getElementById('catalogo-completo-sort-label').textContent = catalogo_completo_sortOpcoes[sort];
+      document.querySelectorAll('.sort-option').forEach(function(el) { if (el.dataset.sort === sort) { el.classList.add('text-marca-700','font-medium'); el.classList.remove('text-gray-600'); } else { el.classList.remove('text-marca-700','font-medium'); el.classList.add('text-gray-600'); } });
+      document.getElementById('catalogo-completo-sort-dropdown').classList.add('hidden');
+      catalogo_completo_render();
+    }
+    function catalogo_completo_abrirFiltros() { const s = document.getElementById('catalogo-completo-sidebar'); const o = document.getElementById('catalogo-completo-overlay'); s.classList.remove('-translate-x-full'); o.classList.remove('hidden'); requestAnimationFrame(function(){ o.classList.remove('opacity-0'); }); document.body.style.overflow='hidden'; }
+    function catalogo_completo_fecharFiltros() { const s = document.getElementById('catalogo-completo-sidebar'); const o = document.getElementById('catalogo-completo-overlay'); s.classList.add('-translate-x-full'); o.classList.add('opacity-0'); setTimeout(function(){ o.classList.add('hidden'); },300); document.body.style.overflow=''; }
+    function catalogo_completo_aplicarFiltros() {
+      catalogo_completo_filtros.especie = []; catalogo_completo_filtros.categoria = []; catalogo_completo_filtros.preco = []; catalogo_completo_filtros.marca = []; catalogo_completo_filtros.idade = [];
+      document.querySelectorAll('#catalogo-completo-sidebar input[type=checkbox]:checked').forEach(function(cb) {
+        const parentDiv = cb.closest('div');
+        const titulo = parentDiv.querySelector('p').textContent;
+        if (titulo.toLowerCase().includes('espécie')) catalogo_completo_filtros.especie.push(cb.value);
+        else if (titulo.toLowerCase().includes('categoria')) catalogo_completo_filtros.categoria.push(cb.value);
+        else if (titulo.toLowerCase().includes('preço')) catalogo_completo_filtros.preco.push(parseInt(cb.value.replace('preco-','')));
+        else if (titulo.toLowerCase().includes('marca')) catalogo_completo_filtros.marca.push(cb.value);
+        else catalogo_completo_filtros.idade.push(cb.value);
+      });
+      catalogo_completo_fecharFiltros();
+      catalogo_completo_render();
+      catalogo_completo_atualizarBadgeFiltros();
+      toast(catalogo_completo_filtrosAtivosCount() + ' filtro(s) aplicado(s)', 'info');
+    }
+    function catalogo_completo_resetarFiltros() {
+      document.querySelectorAll('#catalogo-completo-sidebar input[type=checkbox]').forEach(function(cb) { cb.checked = false; cb.closest('label').classList.remove('bg-marca-50','rounded-xl','px-2','-mx-2'); });
+      catalogo_completo_filtros.especie = []; catalogo_completo_filtros.categoria = []; catalogo_completo_filtros.preco = []; catalogo_completo_filtros.marca = []; catalogo_completo_filtros.idade = [];
+      document.getElementById('catalogo-completo-busca').value = ''; catalogo_completo_filtros.busca = '';
+      document.getElementById('catalogo-completo-limpa-busca').classList.add('hidden');
+      catalogo_completo_render();
+      catalogo_completo_atualizarBadgeFiltros();
+      toast('Filtros limpos', 'info');
+    }
+    function catalogo_completo_filtrosAtivosCount() {
+      return catalogo_completo_filtros.especie.length + catalogo_completo_filtros.categoria.length + catalogo_completo_filtros.preco.length + catalogo_completo_filtros.marca.length + catalogo_completo_filtros.idade.length + (catalogo_completo_filtros.busca ? 1 : 0);
+    }
+    function catalogo_completo_atualizarBadgeFiltros() {
+      const count = catalogo_completo_filtrosAtivosCount();
+      const badge = document.getElementById('catalogo-completo-badge-filtros');
+      if (count > 0) { badge.classList.remove('hidden'); badge.textContent = count; } else { badge.classList.add('hidden'); }
+    }
+    function catalogo_completo_produtosFiltrados() {
+      let lista = catalogo_completo_produtos.slice();
+      if (catalogo_completo_filtros.busca) { const b = catalogo_completo_filtros.busca; lista = lista.filter(function(p) { return p.nome.toLowerCase().includes(b) || p.marca.toLowerCase().includes(b) || catalogo_completo_categoriaMap[p.categoria].toLowerCase().includes(b); }); }
+      if (catalogo_completo_filtros.especie.length) lista = lista.filter(function(p) { return catalogo_completo_filtros.especie.indexOf(p.especie) >= 0; });
+      if (catalogo_completo_filtros.categoria.length) lista = lista.filter(function(p) { return catalogo_completo_filtros.categoria.indexOf(p.categoria) >= 0; });
+      if (catalogo_completo_filtros.marca.length) lista = lista.filter(function(p) { return catalogo_completo_filtros.marca.indexOf(p.marca) >= 0; });
+      if (catalogo_completo_filtros.idade.length) {
+        if (catalogo_completo_filtros.idade.indexOf('todasasidades') >= 0) { lista = lista.filter(function(p) { return p.idade === 'todas'; }); }
+        else { lista = lista.filter(function(p) { return catalogo_completo_filtros.idade.indexOf(p.idade) >= 0; }); }
+      }
+      if (catalogo_completo_filtros.preco.length) { const precosAtivos = catalogo_completo_filtros.preco.map(function(i) { return catalogo_completo_precos[i]; }); lista = lista.filter(function(p) { return precosAtivos.some(function(pr) { return p.preco >= pr.min && p.preco < (pr.maxf || pr.max + 1); }); }); }
+      if (catalogo_completo_sortAtual === 'menor-preco') lista.sort(function(a,b) { return a.preco - b.preco; });
+      else if (catalogo_completo_sortAtual === 'maior-preco') lista.sort(function(a,b) { return b.preco - a.preco; });
+      else if (catalogo_completo_sortAtual === 'lancamentos') lista.sort(function(a,b) { return new Date(b.data) - new Date(a.data); });
+      else { lista.sort(function(a,b) { return b.reviews - a.reviews; }); }
+      return lista;
+    }
+    function catalogo_completo_render() {
+      const lista = catalogo_completo_produtosFiltrados();
+      const grid = document.getElementById('catalogo-completo-grid');
+      const vazio = document.getElementById('catalogo-completo-vazio');
+      document.getElementById('catalogo-completo-contador').textContent = lista.length + ' produto' + (lista.length !== 1 ? 's' : '');
+      if (lista.length === 0) { grid.classList.add('hidden'); vazio.classList.remove('hidden'); return; }
+      grid.classList.remove('hidden'); vazio.classList.add('hidden');
+      let html = '';
+      lista.forEach(function(p) {
+        const estrelas = '★'.repeat(Math.floor(p.avaliacao)) + (p.avaliacao % 1 >= 0.5 ? '½' : '');
+        html += '<div class="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer group active:scale-[0.97] flex flex-col" onclick="catalogo_completo_abrirDetalhe(' + p.id + ')">';
+        html += '<div class="' + p.cor + ' h-32 flex items-center justify-center relative">';
+        html += '<span class="text-5xl">' + p.icone + '</span>';
+        if (p.destaque) html += '<span class="absolute top-2 left-2 bg-amber-400 text-white text-[9px] font-bold font-body px-2 py-0.5 rounded-full uppercase tracking-wide">Destaque</span>';
+        html += '</div>';
+        html += '<div class="p-3 flex flex-col flex-1">';
+        html += '<p class="text-[10px] text-gray-400 font-body uppercase tracking-wider mb-0.5">' + p.marca + '</p>';
+        html += '<h3 class="text-xs font-display font-bold text-gray-900 leading-tight mb-1 line-clamp-2">' + p.nome + '</h3>';
+        html += '<p class="text-[10px] text-gray-400 font-body mb-2">' + p.peso + '</p>';
+        html += '<div class="flex items-center gap-1 mb-2">';
+        html += '<div class="flex text-amber-400 text-[10px] leading-none">' + estrelas + '</div>';
+        html += '<span class="text-[10px] text-gray-400 font-body">' + p.avaliacao + ' · ' + p.reviews + '</span>';
+        html += '</div>';
+        html += '<div class="flex items-center justify-between mt-auto">';
+        html += '<p class="text-sm font-display font-bold text-marca-700">R$ ' + p.preco.toFixed(2).replace('.',',') + '</p>';
+        html += '<button onclick="event.stopPropagation();catalogo_completo_adicionarCarrinho(' + p.id + ')" class="w-8 h-8 bg-marca-600 hover:bg-marca-700 rounded-full flex items-center justify-center text-white transition-all active:scale-90 shadow-sm">';
+        html += '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14m-7-7h14"/></svg>';
+        html += '</button></div></div></div>';
+      });
+      grid.innerHTML = html;
+      catalogo_completo_atualizarBadgeFiltros();
+    }
+    function catalogo_completo_adicionarCarrinho(id) {
+      const p = catalogo_completo_produtos.find(function(x) { return x.id === id; });
+      if (!p) return;
+      catalogo_completo_carrinhoCount++;
+      const btn = event.currentTarget;
+      btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+      btn.classList.remove('bg-marca-600','hover:bg-marca-700'); btn.classList.add('bg-emerald-500');
+      setTimeout(function() { btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14m-7-7h14"/></svg>'; btn.classList.add('bg-marca-600','hover:bg-marca-700'); btn.classList.remove('bg-emerald-500'); }, 1200);
+      toast(p.nome + ' adicionado ao carrinho', 'ok');
+    }
+    function catalogo_completo_abrirDetalhe(id) {
+      const p = catalogo_completo_produtos.find(function(x) { return x.id === id; });
+      if (!p) return;
+      const estrelasCheias = Math.floor(p.avaliacao);
+      let estrelasHtml = '';
+      for (let i = 0; i < 5; i++) { estrelasHtml += i < estrelasCheias ? '<span class="text-amber-400 text-lg">★</span>' : '<span class="text-gray-200 text-lg">★</span>'; }
+      const html = '<div class="space-y-4"><div class="' + p.cor + ' h-40 rounded-2xl flex items-center justify-center"><span class="text-7xl">' + p.icone + '</span></div><div><p class="text-xs text-gray-400 font-body uppercase tracking-wider mb-1">' + p.marca + '</p><h2 class="font-display font-bold text-xl text-gray-900">' + p.nome + '</h2></div><div class="flex items-center gap-2">' + estrelasHtml + '<span class="text-sm font-body text-gray-600 font-semibold">' + p.avaliacao + '</span><span class="text-sm text-gray-400 font-body">(' + p.reviews + ' avaliações)</span></div><div class="bg-gray-50 rounded-2xl p-4 space-y-2.5"><div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Preço</span><span class="font-display font-bold text-marca-700 text-base">R$ ' + p.preco.toFixed(2).replace('.',',') + '</span></div><div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Peso / Volume</span><span class="font-body font-medium text-gray-800">' + p.peso + '</span></div><div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Espécie</span><span class="font-body font-medium text-gray-800 capitalize">' + p.especie + '</span></div><div class="flex justify-between text-sm"><span class="text-gray-500 font-body">Idade recomendada</span><span class="font-body font-medium text-gray-800 capitalize">' + p.idade + '</span></div></div><div class="flex gap-3 pt-2"><button onclick="catalogo_completo_adicionarCarrinho(' + p.id + ');fecharModal();" class="flex-1 py-3.5 bg-marca-600 text-white font-body font-semibold text-sm rounded-2xl hover:bg-marca-700 transition-colors active:scale-95">Adicionar ao Carrinho</button><button onclick="mostrarTela(\'carrinho\');fecharModal();" class="px-5 py-3.5 bg-gray-100 text-gray-700 font-body font-semibold text-sm rounded-2xl hover:bg-gray-200 transition-colors active:scale-95">Ver Carrinho</button></div></div>';
+      abrirModal(html, 'Detalhe do Produto');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#catalogo-completo-sort-dropdown') && !e.target.closest('[onclick*=\'catalogo_completo_toggleSort\']')) {
+        const dd = document.getElementById('catalogo-completo-sort-dropdown');
+        if (dd && !dd.classList.contains('hidden')) dd.classList.add('hidden');
+      }
+    });
+    catalogo_completo_setSort('popularidade');
+  </script>
+</section>
+
     <!-- TELAS -->
   </main>
 
