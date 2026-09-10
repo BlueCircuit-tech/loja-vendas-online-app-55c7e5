@@ -1499,6 +1499,253 @@ document.addEventListener('keydown', (e) => {
 })();
 </script>
 
+    <section data-tela="carrinho" class="hidden animate-fadein">
+  <div class="px-4 pt-4 pb-32 max-w-[430px] mx-auto min-h-[100dvh] flex flex-col gap-4">
+    <!-- Header -->
+    <header>
+      <h1 class="font-display text-2xl font-semibold text-marca-900">Carrinho</h1>
+      <p class="text-marca-700 mt-1 text-sm font-body">Confira seus produtos e agendamentos antes de finalizar.</p>
+    </header>
+
+    <!-- Carrinho preenchido -->
+    <div id="carrinho-content" class="flex flex-col gap-3">
+      <!-- Lista de itens do carrinho -->
+      <ul id="carrinho-lista" class="flex flex-col gap-3 select-none">
+        <!-- Itens inseridos via JS -->
+      </ul>
+
+      <!-- Campo Cupom -->
+      <div class="card p-4 flex items-center gap-2">
+        <label for="carrinho-cupom" class="font-body text-marca-800 text-sm block w-32">Cupom de desconto</label>
+        <form id="carrinho-cupom-form" class="flex flex-1 gap-2 items-center" autocomplete="off" onsubmit="return carrinho_onCupom(event)">
+          <input id="carrinho-cupom" type="text" maxlength="15" placeholder="Digite aqui..." class="input border marca-200 rounded px-3 py-2 text-marca-900 text-base flex-1 transition focus:border-marca-400 focus:outline-none bg-transparent" />
+          <button type="submit" class="btn px-3 py-2 ml-1 bg-marca-600 text-white rounded shadow transition hover:bg-marca-700 active:scale-95">Aplicar</button>
+        </form>
+      </div>
+
+      <!-- Agendamento pendente (se houver) -->
+      <div id="carrinho-agendamento" class="card p-4 flex gap-3 items-center bg-gradient-to-br from-marca-50 to-marca-100 border-l-4 border-destaque">
+        <div class="flex-none w-12 h-12 rounded-full bg-gradient-to-br from-marca-200 to-marca-100 flex items-center justify-center">
+          <svg width="28" height="28" fill="none" stroke="currentColor" class="text-marca-600"><path stroke-width="1.7" d="M14 3v3m0 0c-4.97 0-9 4.03-9 9a8.99 8.99 0 0 0 2.96 6.89 3 3 0 0 0-.96 2.11V25h14v-2.99a3 3 0 0 0-.96-2.11A8.99 8.99 0 0 0 23 15c0-4.97-4.03-9-9-9Zm-3 0V2m6 4V2"/><circle cx="14" cy="15" r="4.2" stroke-width="1.7"/></svg>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center gap-1">
+            <span class="font-medium font-display text-marca-800">Banho &amp; Tosa</span>
+            <span class="badge bg-destaque text-white text-xs ml-1">Agendamento</span>
+          </div>
+          <div class="text-marca-700 text-sm">Sábado, 15/07/2024 às 14:30</div>
+        </div>
+        <div class="ml-auto text-right flex flex-col items-end">
+          <span class="font-semibold font-display text-marca-700">R<!-- TELAS -->nbsp;<span id="carrinho-agendamento-preco">85,00</span></span>
+          <button class="mt-1 text-xs text-error-600 font-medium underline decoration-1 hover:text-error-700 transition" onclick="carrinho_removerAgendamento()">Remover</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrinho vazio -->
+    <div id="carrinho-vazio" class="hidden flex flex-col justify-center items-center p-8">
+      <div class="mb-4">
+        <!-- Ilustração PET -->
+        <div class="w-32 h-32 rounded-full mx-auto flex items-center justify-center bg-gradient-to-tr from-marca-100 to-destaque/20">
+          <svg viewBox="0 0 108 108" width="80" height="80" fill="none">
+            <ellipse cx="54" cy="90" rx="30" ry="18" fill="#FFDCA9"/>
+            <ellipse cx="34" cy="34" rx="15" ry="21" fill="#fff"/>
+            <ellipse cx="74" cy="34" rx="15" ry="21" fill="#fff"/>
+            <ellipse cx="34" cy="34" rx="6" ry="9" fill="#F1B765"/>
+            <ellipse cx="74" cy="34" rx="6" ry="9" fill="#F1B765"/>
+            <ellipse cx="54" cy="62" rx="28" ry="26" fill="#FFDCA9"/>
+            <ellipse cx="52" cy="70" rx="5" ry="9" fill="#fff"/>
+            <ellipse cx="62" cy="70" rx="5" ry="9" fill="#fff"/>
+            <ellipse cx="54" cy="72" rx="8" ry="6" fill="#F1B765"/>
+            <circle cx="44" cy="60" r="4" fill="#fff"/>
+            <circle cx="64" cy="60" r="4" fill="#fff"/>
+            <ellipse cx="44" cy="61" rx="1.5" ry="2.5" fill="#222"/>
+            <ellipse cx="64" cy="61" rx="1.5" ry="2.5" fill="#222"/>
+            <ellipse cx="44" cy="59" rx="1.5" ry="1" fill="#fff"/>
+            <ellipse cx="64" cy="59" rx="1.5" ry="1" fill="#fff"/>
+            <ellipse cx="54" cy="65" rx="2" ry="1" fill="#DC922C"/>
+            <circle cx="54" cy="76" r="2" fill="#fff"/>
+            <rect x="50" y="78" width="8" height="3" rx="1.5" fill="#fff"/>
+          </svg>
+        </div>
+      </div>
+      <div class="text-center">
+        <h2 class="font-display text-lg text-marca-900 mb-1">Seu carrinho está vazio</h2>
+        <p class="font-body text-marca-700 mb-5">Que tal dar uma olhada nos nossos produtos?</p>
+        <button class="btn bg-marca-600 text-white w-full mt-1 hover:bg-marca-700 active:scale-95"
+          onclick="mostrarTela('catalogo-completo')">
+          Ver produtos
+        </button>
+      </div>
+    </div>
+
+    <!-- Resumo financeiro -->
+    <div id="carrinho-resumo" class="fixed left-0 right-0 bottom-20 max-w-[430px] mx-auto px-4 z-30">
+      <div class="card p-4 mt-4 mb-3 shadow-lg border border-marca-100">
+        <div class="flex items-center justify-between font-body text-marca-700 py-1">
+          <span>Subtotal dos produtos</span>
+          <span id="carrinho-subtotal-prod">R$ 207,80</span>
+        </div>
+        <div class="flex items-center justify-between font-body text-marca-700 py-1">
+          <span>Frete</span>
+          <span id="carrinho-frete" class="font-medium text-marca-600">Grátis</span>
+        </div>
+        <div class="flex items-center justify-between font-body text-destaque py-1">
+          <span>Desconto do cupom</span>
+          <span id="carrinho-cupom-desc">- R$ 20,00</span>
+        </div>
+        <div class="border-t my-2"></div>
+        <div class="flex items-center justify-between font-display text-lg font-bold">
+          <span>Total</span>
+          <span id="carrinho-total" class="text-green-600">R$ 272,80</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão Fixo -->
+    <div class="fixed left-0 right-0 bottom-0 max-w-[430px] mx-auto px-4 pt-2 pb-4 bg-white z-40 border-t border-marca-100">
+      <button id="carrinho-btn-finalizar"
+        class="btn w-full h-14 bg-green-600 text-white text-base font-bold font-display rounded-lg shadow-xl transition hover:bg-green-700 active:scale-95"
+        onclick="carrinho_finalizarPedido()">
+        Finalizar Pedido
+      </button>
+    </div>
+  </div>
+  <script>
+  // Dados de exemplo de produtos e agendamento:
+  let carrinho = [
+    {
+      id: 1,
+      nome: 'Ração Seca Golden Seleção Natural Cães 15kg',
+      img: 'https://ui-avatars.com/api/?name=RS&background=FFDCA9&color=3C2E1A&rounded=true&bold=true&size=96',
+      preco: 179.90,
+      qtd: 1,
+      max: 5
+    },
+    {
+      id: 2,
+      nome: 'Shampoo Pet Clean 500ml',
+      img: 'https://ui-avatars.com/api/?name=SP&background=AEE9DF&color=025B4B&rounded=true&bold=true&size=96',
+      preco: 27.90,
+      qtd: 2,
+      max: 6
+    }
+  ];
+  let agendamento = {
+    id: 1,
+    servico: 'Banho & Tosa',
+    preco: 85,
+    data: '2024-07-15T14:30:00'
+  };
+  let cupomValor = 20; // Reais
+  let cupomAtivo = true;
+  let carrinhoFrete = 0;
+  function carrinho_render() {
+    // Itens não-vazios? Simula. Recalcula totais.
+    const lista = document.getElementById('carrinho-lista');
+    lista.innerHTML = '';
+    let subtotal = 0;
+    carrinho.forEach((item, idx) => {
+      const sub = item.preco * item.qtd;
+      subtotal += sub;
+      lista.innerHTML += `
+      <li class="card group relative flex items-stretch gap-3 p-3 pr-2 bg-white overflow-hidden transition shadow-sm hover:shadow-lg"
+          onpointerdown="carrinho_swipeStart(event, ${idx})">
+        <img src="${item.img}" alt="${item.nome}" class="w-14 h-14 rounded-lg bg-marca-50 object-cover border border-marca-100 shadow" />
+        <div class="flex-1 flex flex-col justify-center min-w-0">
+          <div class="truncate font-body font-medium text-marca-900 text-base">${item.nome}</div>
+          <div class="flex items-center gap-1">
+            <span class="text-sm text-marca-600">R$ ${item.preco.toFixed(2).replace('.',',')}</span>
+            <span class="mx-1 text-marca-300 text-xs">·</span>
+            <span class="text-sm text-marca-700">Subtotal: <b>R$ ${(sub).toFixed(2).replace('.',',')}</b></span>
+          </div>
+          <div class="flex items-center gap-2 mt-1">
+            <button class="w-8 h-8 flex items-center justify-center bg-marca-100 text-marca-700 rounded transition hover:bg-marca-200 active:scale-95 font-bold text-xl disabled:text-marca-200"
+              onclick="carrinho_alterarQtd(${idx}, -1)" ${item.qtd <= 1 ? "disabled" : ""}>-</button>
+            <span class="w-7 text-center text-base">${item.qtd}</span>
+            <button class="w-8 h-8 flex items-center justify-center bg-marca-100 text-marca-700 rounded transition hover:bg-marca-200 active:scale-95 font-bold text-xl disabled:text-marca-200"
+              onclick="carrinho_alterarQtd(${idx}, 1)" ${item.qtd >= item.max ? "disabled" : ""}>+</button>
+          </div>
+        </div>
+        <button class="absolute top-2 right-1 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition"
+          onclick="carrinho_removerProduto(${idx})">
+          <svg width="26" height="26" fill="none" class="text-error-600 hover:text-error-700 active:scale-95" stroke="currentColor">
+            <circle cx="13" cy="13" r="12" fill="#fff"/>
+            <path stroke-width="2" stroke-linecap="round" d="M9 9l8 8M17 9l-8 8" />
+          </svg>
+        </button>
+        <div class="absolute inset-y-0 right-[-20%] w-[22%] flex items-center justify-end pointer-events-none z-10 transition"
+          id="carrinho-swipe-action-${idx}">
+          <button class="btn bg-error-600 text-white px-2 py-1 rounded shadow active:scale-95" style="min-width:40px"
+            onclick="carrinho_removerProduto(${idx})">
+            <svg width="20" height="20" fill="none" stroke="currentColor">
+              <circle cx="10" cy="10" r="9" fill="#fff"/>
+              <path stroke-width="2" stroke-linecap="round" d="M7 7l6 6M13 7l-6 6"/>
+            </svg>
+          </button>
+        </div>
+      </li>`;
+    });
+
+    document.getElementById('carrinho-content').classList.toggle('hidden', carrinho.length === 0 && !agendamento);
+    document.getElementById('carrinho-vazio').classList.toggle('hidden', !(carrinho.length === 0 && !agendamento));
+
+    let agDiv = document.getElementById('carrinho-agendamento');
+    if (agendamento) {
+      agDiv.classList.remove('hidden');
+      agDiv.querySelector('#carrinho-agendamento-preco').innerText = agendamento.preco.toFixed(2).replace('.',',');
+      // Exibe data formatada:
+      agDiv.querySelector('.text-marca-700').innerText =
+        diasemana_br(new Date(agendamento.data)) + ', ' +
+        data_br(new Date(agendamento.data)) +
+        ' às ' + hora_br(new Date(agendamento.data));
+    } else {
+      agDiv.classList.add('hidden');
+    }
+
+    // Calcula subtotal, frete, etc.
+    let subtotalProdutos = subtotal;
+    let subtotalAgendamento = agendamento ? agendamento.preco : 0;
+    // Frete
+    if (subtotalProdutos >= 99 || (subtotalProdutos+subtotalAgendamento) >= 99) {
+      carrinhoFrete = 0;
+    } else if (subtotalProdutos > 0) {
+      carrinhoFrete = 12.90;
+    } else {
+      carrinhoFrete = 0;
+    }
+    let freteLabel = carrinhoFrete === 0 ? "Grátis" : 'R$ ' + carrinhoFrete.toFixed(2).replace('.',',');
+    document.getElementById('carrinho-subtotal-prod').innerText = 'R$ ' + subtotalProdutos.toFixed(2).replace('.',',');
+    document.getElementById('carrinho-frete').innerText = freteLabel;
+
+    let descontoCupom = cupomAtivo && cupomValor > 0 ? cupomValor : 0;
+    document.getElementById('carrinho-cupom-desc').innerText = descontoCupom > 0 ? `- R$ ${descontoCupom.toFixed(2).replace('.',',')}` : '—';
+
+    let total = subtotalProdutos + subtotalAgendamento + carrinhoFrete - descontoCupom;
+    if (total < 0) total = 0;
+    document.getElementById('carrinho-total').innerText = 'R$ ' + total.toFixed(2).replace('.',',');
+
+    // Botão de finalizar pedido
+    document.getElementById('carrinho-btn-finalizar').disabled = (carrinho.length === 0 && !agendamento);
+
+    // Resumo financeiro some se carrinho vazio
+    document.getElementById('carrinho-resumo').classList.toggle('hidden', carrinho.length === 0 && !agendamento);
+    // Botão finalizar some se carrinho vazio
+    document.getElementById('carrinho-btn-finalizar').parentElement.classList.toggle('hidden', carrinho.length === 0 && !agendamento);
+  }
+
+  // Remover produto/cart swipe
+  let carrinho_swipeData = null;
+  function carrinho_swipeStart(e, idx) {
+    if (e.touches && e.touches.length === 1) {
+      carrinho_swipeData = { x: e.touches[0].clientX, y: e.touches[0].clientY, idx, active: true };
+      document.addEventListener('touchmove', carrinho_swipeMove, {passive:false});
+      document.addEventListener('touchend', carrinho_swipeEnd);
+    } else if (!e.touches) {
+      // Mouse drag
+      carrinho_swipeData = { x: e.clientX, y: e.clientY, idx, active: true };
+      document.addEventListener
+
     <!-- TELAS -->
   </main>
 
