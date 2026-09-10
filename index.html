@@ -920,6 +920,362 @@ document.addEventListener('keydown', (e) => {
   </script>
 </section>
 
+    <section data-tela="agendar-servico" class="hidden">
+      <div class="px-5 py-4 pb-8 max-w-[430px] mx-auto">
+        <!-- Header -->
+        <div class="mb-5">
+          <button onclick="mostrarTela('home-vitrine')" class="mb-3 flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Voltar
+          </button>
+          <h1 class="font-display text-2xl font-bold text-gray-900">Agendar Serviço</h1>
+          <p class="text-sm text-gray-500 mt-1">Escolha o serviço, pet, data e horário</p>
+        </div>
+
+        <!-- Stepper -->
+        <div class="flex items-center justify-between mb-6 px-1">
+          <div class="flex items-center gap-2">
+            <div id="step-ind-1" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-marca-600 text-white transition-all">1</div>
+            <span class="text-xs font-medium text-gray-700 hidden sm:inline">Serviço</span>
+          </div>
+          <div class="flex-1 h-0.5 bg-gray-200 mx-2 rounded"><div id="step-line-1" class="h-full bg-marca-600 rounded transition-all" style="width:0%"></div></div>
+          <div class="flex items-center gap-2">
+            <div id="step-ind-2" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-400 transition-all">2</div>
+            <span class="text-xs font-medium text-gray-400 hidden sm:inline">Pet</span>
+          </div>
+          <div class="flex-1 h-0.5 bg-gray-200 mx-2 rounded"><div id="step-line-2" class="h-full bg-marca-600 rounded transition-all" style="width:0%"></div></div>
+          <div class="flex items-center gap-2">
+            <div id="step-ind-3" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-400 transition-all">3</div>
+            <span class="text-xs font-medium text-gray-400 hidden sm:inline">Data</span>
+          </div>
+          <div class="flex-1 h-0.5 bg-gray-200 mx-2 rounded"><div id="step-line-3" class="h-full bg-marca-600 rounded transition-all" style="width:0%"></div></div>
+          <div class="flex items-center gap-2">
+            <div id="step-ind-4" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-400 transition-all">4</div>
+            <span class="text-xs font-medium text-gray-400 hidden sm:inline">Horário</span>
+          </div>
+        </div>
+
+        <!-- STEP 1: Tipo de Serviço -->
+        <div id="step-1" class="space-y-3">
+          <h2 class="font-display text-lg font-semibold text-gray-800 mb-3">Selecione o serviço</h2>
+          <div id="servicos-grid" class="grid grid-cols-2 gap-3">
+            <button onclick="agendar_servico_selecionarServico(this,'banho-simples',45)" class="servico-card card p-4 text-left hover:border-marca-300 hover:shadow-md transition-all active:scale-95 group">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-800">Banho Simples</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Shampoo e secagem</p>
+              <p class="font-display font-bold text-marca-600 mt-2">R$ 45,00</p>
+            </button>
+            <button onclick="agendar_servico_selecionarServico(this,'tosa-higienica',55)" class="servico-card card p-4 text-left hover:border-marca-300 hover:shadow-md transition-all active:scale-95 group">
+              <div class="w-10 h-10 rounded-xl bg-pink-100 flex items-center justify-center mb-3 group-hover:bg-pink-200 transition-colors">
+                <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121A3 3 0 009.88 9.88m5.657 0a3 3 0 11-5.657 0M12 3v1m0 16v1m8.66-13.66l-.707.707M4.049 19.95l-.707.707M21 12h-1M4 12H3m16.95 4.95l-.707-.707M4.05 4.05l-.707-.707"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-800">Tosa Higiênica</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Patinhas e região íntima</p>
+              <p class="font-display font-bold text-marca-600 mt-2">R$ 55,00</p>
+            </button>
+            <button onclick="agendar_servico_selecionarServico(this,'banho-tosa',85)" class="servico-card card p-4 text-left hover:border-marca-300 hover:shadow-md transition-all active:scale-95 group">
+              <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center mb-3 group-hover:bg-purple-200 transition-colors">
+                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-800">Banho + Tosa</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Combo completo de higiene</p>
+              <p class="font-display font-bold text-marca-600 mt-2">R$ 85,00</p>
+            </button>
+            <button onclick="agendar_servico_selecionarServico(this,'pacote-completo',110)" class="servico-card card p-4 text-left hover:border-marca-300 hover:shadow-md transition-all active:scale-95 group">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center mb-3 group-hover:bg-amber-200 transition-colors">
+                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 012-2h2M8 12h8M6 12a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v3a2 2 0 01-2 2h-1M6 12v5a2 2 0 002 2h.01"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-800">Pacote Completo</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Banho, tosa e hidratação</p>
+              <p class="font-display font-bold text-marca-600 mt-2">R$ 110,00</p>
+            </button>
+            <button onclick="agendar_servico_selecionarServico(this,'consulta-veterinaria',120)" class="servico-card card p-4 text-left hover:border-marca-300 hover:shadow-md transition-all active:scale-95 group">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center mb-3 group-hover:bg-emerald-200 transition-colors">
+                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-800">Consulta Veterinária</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Clínico geral 30min</p>
+              <p class="font-display font-bold text-marca-600 mt-2">R$ 120,00</p>
+            </button>
+            <button onclick="agendar_servico_selecionarServico(this,'vacina-v10',70)" class="servico-card card p-4 text-left hover:border-marca-300 hover:shadow-md transition-all active:scale-95 group">
+              <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center mb-3 group-hover:bg-red-200 transition-colors">
+                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 12.558a4.837 4.837 0 00-1.023-1.698l2.576-2.576a1 1 0 00-1.414-1.414l-2.576 2.576a4.837 4.837 0 00-1.698-1.023l-2.818-.97a1 1 0 00-1.175.676l-.97 2.818a4.837 4.837 0 00-1.023 1.698l-2.576-2.576a1 1 0 00-1.414 1.414l2.576 2.576a4.837 4.837 0 00-1.023 1.698l-.97 2.818a1 1 0 00.676 1.175l2.818.97a4.837 4.837 0 001.698 1.023l2.576-2.576a1 1 0 001.414 1.414l-2.576 2.576a4.837 4.837 0 001.698 1.023l2.818.97a1 1 0 001.175-.676l.97-2.818z"/></svg>
+              </div>
+              <h3 class="font-semibold text-sm text-gray-800">Vacina V10</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Antirrábica + V8</p>
+              <p class="font-display font-bold text-marca-600 mt-2">R$ 70,00</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Selecionar Pet -->
+        <div id="step-2" class="hidden space-y-3">
+          <h2 class="font-display text-lg font-semibold text-gray-800 mb-3">Selecione o pet</h2>
+          <div id="pets-lista" class="space-y-3"></div>
+          <button onclick="agendar_servico_irParaStep(1)" class="text-sm text-gray-500 hover:text-gray-700 mt-3 transition-colors flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Voltar para serviços
+          </button>
+        </div>
+
+        <!-- STEP 3: Calendário -->
+        <div id="step-3" class="hidden space-y-4">
+          <h2 class="font-display text-lg font-semibold text-gray-800">Escolha a data</h2>
+          <!-- Navegação mês -->
+          <div class="flex items-center justify-between">
+            <button onclick="agendar_servico_mudarMes(-1)" class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95">
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <span id="cal-mes-ano" class="font-display font-bold text-gray-800"></span>
+            <button onclick="agendar_servico_mudarMes(1)" class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95">
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <!-- Dias da semana -->
+          <div class="grid grid-cols-7 gap-1">
+            <span class="text-center text-xs font-medium text-gray-400 py-1">Dom</span>
+            <span class="text-center text-xs font-medium text-gray-400 py-1">Seg</span>
+            <span class="text-center text-xs font-medium text-gray-400 py-1">Ter</span>
+            <span class="text-center text-xs font-medium text-gray-400 py-1">Qua</span>
+            <span class="text-center text-xs font-medium text-gray-400 py-1">Qui</span>
+            <span class="text-center text-xs font-medium text-gray-400 py-1">Sex</span>
+            <span class="text-center text-xs font-medium text-gray-400 py-1">Sáb</span>
+          </div>
+          <div id="cal-grid" class="grid grid-cols-7 gap-1"></div>
+          <!-- Legend -->
+          <div class="flex items-center gap-4 text-xs text-gray-500 pt-2">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> Disponível</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-gray-300"></span> Indisponível</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-marca-600"></span> Selecionado</span>
+          </div>
+          <button onclick="agendar_servico_irParaStep(2)" class="text-sm text-gray-500 hover:text-gray-700 mt-2 transition-colors flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Voltar para pets
+          </button>
+        </div>
+
+        <!-- STEP 4: Horários -->
+        <div id="step-4" class="hidden space-y-4">
+          <h2 class="font-display text-lg font-semibold text-gray-800">Escolha o horário</h2>
+          <p id="horario-data-info" class="text-sm text-gray-500"></p>
+          <div id="horarios-grid" class="grid grid-cols-3 gap-2.5"></div>
+          <button onclick="agendar_servico_irParaStep(3)" class="text-sm text-gray-500 hover:text-gray-700 mt-2 transition-colors flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Voltar para data
+          </button>
+        </div>
+
+        <!-- STEP 5: Observações + Resumo -->
+        <div id="step-5" class="hidden space-y-5">
+          <h2 class="font-display text-lg font-semibold text-gray-800">Quase lá!</h2>
+          <!-- Resumo -->
+          <div class="card p-4 space-y-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">Resumo do Agendamento</h3>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Serviço</span>
+              <span id="resumo-servico" class="font-medium text-gray-800 text-right max-w-[55%]"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Pet</span>
+              <span id="resumo-pet" class="font-medium text-gray-800"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Data</span>
+              <span id="resumo-data" class="font-medium text-gray-800"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Horário</span>
+              <span id="resumo-horario" class="font-medium text-gray-800"></span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Profissional</span>
+              <span id="resumo-profissional" class="font-medium text-gray-800"></span>
+            </div>
+            <div class="border-t border-gray-100 pt-2 flex justify-between items-center">
+              <span class="font-semibold text-gray-700">Total</span>
+              <span id="resumo-valor" class="font-display font-bold text-lg text-marca-600"></span>
+            </div>
+          </div>
+          <!-- Observações -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Observações <span class="text-gray-400">(opcional)</span></label>
+            <textarea id="agendar-obs" rows="3" placeholder="Ex: Pet arisco, precisa de focinheira. Alergia a shampoo X." class="w-full rounded-xl border border-gray-200 p-3 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-300 focus:border-marca-300 transition-all resize-none"></textarea>
+          </div>
+          <button onclick="agendar_servico_confirmar()" class="w-full btn btn-primary py-3.5 rounded-xl font-semibold text-base active:scale-95 transition-all flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Confirmar Agendamento
+          </button>
+          <button onclick="agendar_servico_irParaStep(4)" class="w-full text-sm text-gray-500 hover:text-gray-700 py-2 transition-colors">
+            Voltar para horários
+          </button>
+        </div>
+      </div>
+    </section>
+    <script>
+      const agendar_servico_pets = [
+        { id: 1, nome: 'Rex', especie: 'Cachorro', raca: 'Golden Retriever', peso: '32 kg', idade: '3 anos', cor: 'bg-amber-500', inicial: 'R' },
+        { id: 2, nome: 'Mia', especie: 'Gato', raca: 'Siamês', peso: '4.2 kg', idade: '2 anos', cor: 'bg-blue-500', inicial: 'M' },
+        { id: 3, nome: 'Thor', especie: 'Cachorro', raca: 'Bulldog Francês', peso: '12 kg', idade: '1 ano', cor: 'bg-gray-600', inicial: 'T' },
+        { id: 4, nome: 'Luna', especie: 'Cachorro', raca: 'Poodle', peso: '6 kg', idade: '5 anos', cor: 'bg-pink-500', inicial: 'L' },
+      ];
+
+      const agendar_servico_profissionais = [
+        { nome: 'Ana Souza', funcao: 'Banhista', avatar: 'AS', cor: 'bg-emerald-500' },
+        { nome: 'Carlos Lima', funcao: 'Veterinário', avatar: 'CL', cor: 'bg-red-500' },
+        { nome: 'Julia Mendes', funcao: 'Tosador', avatar: 'JM', cor: 'bg-purple-500' },
+      ];
+
+      const agendar_servico_horarios = [
+        { hora: '09:00', prof: 0 }, { hora: '09:30', prof: 0 },
+        { hora: '10:00', prof: 0 }, { hora: '10:30', prof: 0 },
+        { hora: '11:00', prof: 0 }, { hora: '11:30', prof: 0 },
+        { hora: '13:00', prof: 1 }, { hora: '13:30', prof: 1 },
+        { hora: '14:00', prof: 1 }, { hora: '14:30', prof: 1 },
+        { hora: '15:00', prof: 2 }, { hora: '15:30', prof: 2 },
+        { hora: '16:00', prof: 2 }, { hora: '16:30', prof: 2 },
+        { hora: '17:00', prof: 2 },
+      ];
+
+      let agendar_servico_estado = {
+        servico: null, preco: 0, servicoNome: '',
+        petId: null, petNome: '',
+        dataISO: null,
+        horario: null,
+        horarioProf: null,
+        mesAtual: new Date().getMonth(),
+        anoAtual: new Date().getFullYear(),
+        datasOcupadas: ['2025-07-10', '2025-07-11', '2025-07-14', '2025-07-18', '2025-07-21', '2025-07-22', '2025-07-25', '2025-07-28'],
+      };
+
+      function agendar_servico_selecionarServico(el, nome, preco) {
+        document.querySelectorAll('.servico-card').forEach(c => { c.classList.remove('border-marca-500', 'ring-2', 'ring-marca-200'); c.classList.add('border-gray-100'); });
+        el.classList.remove('border-gray-100');
+        el.classList.add('border-marca-500', 'ring-2', 'ring-marca-200');
+        agendar_servico_estado.servico = nome;
+        agendar_servico_estado.preco = preco;
+        agendar_servico_estado.servicoNome = el.querySelector('h3').textContent;
+        setTimeout(() => agendar_servico_irParaStep(2), 200);
+      }
+
+      function agendar_servico_irParaStep(num) {
+        for (let i = 1; i <= 5; i++) {
+          document.getElementById('step-' + i).classList.toggle('hidden', i !== num);
+        }
+        if (num === 2) agendar_servico_renderPets();
+        if (num === 3) { agendar_servico_renderCalendario(); }
+        if (num === 4) { agendar_servico_renderHorarios(); }
+        if (num === 5) { agendar_servico_renderResumo(); }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function agendar_servico_renderPets() {
+        const container = document.getElementById('pets-lista');
+        container.innerHTML = agendar_servico_pets.map(pet => `
+          <button onclick="agendar_servico_selecionarPet(${pet.id}, this)" class="pet-card card w-full flex items-center gap-3.5 p-3.5 text-left hover:border-marca-300 hover:shadow-md transition-all active:scale-[0.98]">
+            <div class="w-12 h-12 rounded-full ${pet.cor} flex items-center justify-center text-white font-bold text-sm shrink-0">${pet.inicial}</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-semibold text-sm text-gray-800">${pet.nome}</h3>
+              <p class="text-xs text-gray-500">${pet.raca} · ${pet.peso} · ${pet.idade}</p>
+            </div>
+            <svg class="w-5 h-5 text-gray-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        `).join('');
+      }
+
+      function agendar_servico_selecionarPet(id, el) {
+        document.querySelectorAll('.pet-card').forEach(c => { c.classList.remove('border-marca-500', 'ring-2', 'ring-marca-200'); });
+        el.classList.remove('border-gray-100');
+        el.classList.add('border-marca-500', 'ring-2', 'ring-marca-200');
+        agendar_servico_estado.petId = id;
+        const pet = agendar_servico_pets.find(p => p.id === id);
+        agendar_servico_estado.petNome = pet.nome;
+        setTimeout(() => agendar_servico_irParaStep(3), 200);
+      }
+
+      function agendar_servico_renderCalendario() {
+        const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+        document.getElementById('cal-mes-ano').textContent = `${meses[agendar_servico_estado.mesAtual]} ${agendar_servico_estado.anoAtual}`;
+        const grid = document.getElementById('cal-grid');
+        const primeiroDia = new Date(agendar_servico_estado.anoAtual, agendar_servico_estado.mesAtual, 1).getDay();
+        const diasNoMes = new Date(agendar_servico_estado.anoAtual, agendar_servico_estado.mesAtual + 1, 0).getDate();
+        const hoje = new Date();
+        const hojeStr = hoje.toISOString().split('T')[0];
+        let html = '';
+        for (let i = 0; i < primeiroDia; i++) html += '<div></div>';
+        for (let d = 1; d <= diasNoMes; d++) {
+          const dtStr = `${agendar_servico_estado.anoAtual}-${String(agendar_servico_estado.mesAtual + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+          const diaSemana = new Date(agendar_servico_estado.anoAtual, agendar_servico_estado.mesAtual, d).getDay();
+          const domingo = diaSemana === 0;
+          const passado = dtStr < hojeStr;
+          const ocupado = agendar_servico_estado.datasOcupadas.includes(dtStr);
+          const selecionado = dtStr === agendar_servico_estado.dataISO;
+          let cls = 'w-9 h-9 rounded-full flex items-center justify-center text-sm font-medium transition-all cursor-pointer ';
+          if (selecionado) cls += 'bg-marca-600 text-white shadow-md scale-110';
+          else if (passado || domingo || ocupado) cls += 'bg-gray-100 text-gray-300 cursor-not-allowed';
+          else cls += 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 active:scale-95 cursor-pointer';
+          const disabled = passado || domingo || ocupado;
+          html += `<button ${disabled ? 'disabled' : `onclick="agendar_servico_selecionarData('${dtStr}', this)"`} class="${cls}">${d}</button>`;
+        }
+        grid.innerHTML = html;
+      }
+
+      function agendar_servico_mudarMes(delta) {
+        agendar_servico_estado.mesAtual += delta;
+        if (agendar_servico_estado.mesAtual > 11) { agendar_servico_estado.mesAtual = 0; agendar_servico_estado.anoAtual++; }
+        if (agendar_servico_estado.mesAtual < 0) { agendar_servico_estado.mesAtual = 11; agendar_servico_estado.anoAtual--; }
+        agendar_servico_renderCalendario();
+      }
+
+      function agendar_servico_selecionarData(iso, el) {
+        document.querySelectorAll('#cal-grid button').forEach(b => { if (!b.disabled) { b.className = b.className.replace('bg-marca-600 text-white shadow-md scale-110', 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 active:scale-95'); } });
+        el.className = el.className.replace('bg-emerald-50 text-emerald-700 hover:bg-emerald-100 active:scale-95', 'bg-marca-600 text-white shadow-md scale-110');
+        agendar_servico_estado.dataISO = iso;
+        setTimeout(() => agendar_servico_irParaStep(4), 200);
+      }
+
+      function agendar_servico_renderHorarios() {
+        const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+        const d = new Date(agendar_servico_estado.dataISO + 'T12:00:00');
+        document.getElementById('horario-data-info').textContent = `${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
+        const ocupados = ['09:30', '14:00'];
+        document.getElementById('horarios-grid').innerHTML = agendar_servico_horarios.map(h => {
+          const ocupado = ocupados.includes(h.hora);
+          const prof = agendar_servico_profissionais[h.prof];
+          return `<button onclick="${ocupado ? '' : `agendar_servico_selecionarHorario('${h.hora}', ${h.prof})`}" ${ocupado ? 'disabled' : ''} class="horario-btn card p-3 text-center transition-all ${ocupado ? 'opacity-40 cursor-not-allowed' : 'hover:border-marca-300 hover:shadow-md active:scale-95'}">
+            <span class="block font-semibold text-sm ${ocupado ? 'text-gray-400 line-through' : 'text-gray-800'}">${h.hora}</span>
+            <span class="block text-[10px] text-gray-400 mt-0.5">${ocupado ? 'Ocupado' : prof.nome.split(' ')[0]}</span>
+          </button>`;
+        }).join('');
+      }
+
+      function agendar_servico_selecionarHorario(hora, profIdx) {
+        agendar_servico_estado.horario = hora;
+        agendar_servico_estado.horarioProf = agendar_servico_profissionais[profIdx];
+        document.querySelectorAll('.horario-btn').forEach(b => { b.classList.remove('border-marca-500', 'ring-2', 'ring-marca-200', 'bg-marca-50'); });
+        agendar_servico_irParaStep(5);
+      }
+
+      function agendar_servico_renderResumo() {
+        const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+        document.getElementById('resumo-servico').textContent = agendar_servico_estado.servicoNome;
+        document.getElementById('resumo-pet').textContent = agendar_servico_estado.petNome;
+        const d = new Date(agendar_servico_estado.dataISO + 'T12:00:00');
+        document.getElementById('resumo-data').textContent = `${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
+        document.getElementById('resumo-horario').textContent = agendar_servico_estado.horario;
+        document.getElementById('resumo-profissional').textContent = agendar_servico_estado.horarioProf.nome;
+        document.getElementById('resumo-valor').textContent = `R$ ${agendar_servico_estado.preco.toFixed(2).replace('.', ',')}`;
+      }
+
+      function agendar_servico_confirmar() {
+        agendar_servico_estado.datasOcupadas.push(agendar_servico_estado.dataISO);
+        toast('Agendamento confirmado! 🎉 Você receberá a confirmação por WhatsApp.', 'ok');
+        mostrarTela('notificacoes');
+        agendar_servico_estado = { servico: null, preco: 0, servicoNome: '', petId: null, petNome: '', dataISO: null, horario: null, horarioProf: null, mesAtual: new Date().getMonth(), anoAtual: new Date().getFullYear(), datasOcupadas: [...agendar_servico_estado.datasOcupadas] };
+      }
+    </script>
+
     <!-- TELAS -->
   </main>
 
