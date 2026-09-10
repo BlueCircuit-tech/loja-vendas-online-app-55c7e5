@@ -2323,6 +2323,430 @@ document.addEventListener('keydown', (e) => {
 })();
 </script>
 
+    <section data-tela="painel-admin" class="hidden">
+<div class="p-4 md:p-6 space-y-5 animate-fadeIn">
+
+  <!-- Cabeçalho -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="font-display text-2xl font-bold text-gray-900">Painel Admin</h1>
+      <p class="text-sm text-gray-500 mt-0.5">Quarta-feira, 15 de Julho de 2025</p>
+    </div>
+    <button onclick="painel_admin_abrirNotificacoes()" class="relative w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all active:scale-95">
+      <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+      <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">5</span>
+    </button>
+  </div>
+
+  <!-- Cards de indicadores -->
+  <div class="grid grid-cols-2 gap-3">
+    <div onclick="painel_admin_navegar('agendar-servico')" class="card cursor-pointer group">
+      <div class="flex items-center justify-between mb-2">
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
+          <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+12%</span>
+      </div>
+      <p class="text-xs text-gray-500 mb-0.5">Faturamento hoje</p>
+      <p class="font-display text-xl font-bold text-gray-900">R$ 1.247</p>
+      <p class="text-[11px] text-gray-400 mt-1">vs R$ 1.113 ontem</p>
+    </div>
+
+    <div onclick="painel_admin_mostrarPedidos('pendente')" class="card cursor-pointer group">
+      <div class="flex items-center justify-between mb-2">
+        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+          <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        </div>
+        <span class="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">8</span>
+      </div>
+      <p class="text-xs text-gray-500 mb-0.5">Pedidos pendentes</p>
+      <p class="font-display text-xl font-bold text-gray-900">8</p>
+      <p class="text-[11px] text-gray-400 mt-1">2 precisam de atenção</p>
+    </div>
+
+    <div onclick="painel_admin_navegar('agendar-servico')" class="card cursor-pointer group">
+      <div class="flex items-center justify-between mb-2">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+          <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">Hoje</span>
+      </div>
+      <p class="text-xs text-gray-500 mb-0.5">Agendamentos</p>
+      <p class="font-display text-xl font-bold text-gray-900">5</p>
+      <p class="text-[11px] text-gray-400 mt-1">1 às 14h, 2 às 16h</p>
+    </div>
+
+    <div onclick="painel_admin_navegarClientes()" class="card cursor-pointer group">
+      <div class="flex items-center justify-between mb-2">
+        <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
+          <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <span class="text-xs font-medium text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">+28</span>
+      </div>
+      <p class="text-xs text-gray-500 mb-0.5">Clientes ativos</p>
+      <p class="font-display text-xl font-bold text-gray-900">342</p>
+      <p class="text-[11px] text-gray-400 mt-1">+28 este mês</p>
+    </div>
+  </div>
+
+  <!-- Gráfico de vendas -->
+  <div class="card">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <h2 class="font-display text-base font-bold text-gray-900">Vendas da semana</h2>
+        <p class="text-xs text-gray-500">Últimos 7 dias</p>
+      </div>
+      <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">↑ 8.2%</span>
+    </div>
+    <div class="flex items-end justify-between gap-2 h-36">
+      <div class="flex flex-col items-center flex-1 gap-1">
+        <div class="text-[10px] font-medium text-gray-600">R$780</div>
+        <div class="w-full rounded-t-lg bg-brand-200 hover:bg-brand-400 transition-colors cursor-pointer" style="height:55%"></div>
+        <div class="text-[11px] text-gray-400">Seg</div>
+      </div>
+      <div class="flex flex-col items-center flex-1 gap-1">
+        <div class="text-[10px] font-medium text-gray-600">R$920</div>
+        <div class="w-full rounded-t-lg bg-brand-200 hover:bg-brand-400 transition-colors cursor-pointer" style="height:68%"></div>
+        <div class="text-[11px] text-gray-400">Ter</div>
+      </div>
+      <div class="flex flex-col items-center flex-1 gap-1">
+        <div class="text-[10px] font-medium text-gray-600">R$650</div>
+        <div class="w-full rounded-t-lg bg-brand-200 hover:bg-brand-400 transition-colors cursor-pointer" style="height:42%"></div>
+        <div class="text-[11px] text-gray-400">Qua</div>
+      </div>
+      <div class="flex flex-col items-center flex-1 gap-1">
+        <div class="text-[10px] font-medium text-gray-600">R$1.1k</div>
+        <div class="w-full rounded-t-lg bg-brand-300 hover:bg-brand-500 transition-colors cursor-pointer" style="height:82%"></div>
+        <div class="text-[11px] text-gray-400">Qui</div>
+      </div>
+      <div class="flex flex-col items-center flex-1 gap-1">
+        <div class="text-[10px] font-medium text-gray-600">R$1.4k</div>
+        <div class="w-full rounded-t-lg bg-brand-500 hover:bg-brand-700 transition-colors cursor-pointer shadow-md shadow-brand-200" style="height:100%"></div>
+        <div class="text-[11px] font-bold text-brand-600">Sex</div>
+      </div>
+      <div class="flex flex-col items-center flex-1 gap-1">
+        <div class="text-[10px] font-medium text-gray-600">R$890</div>
+        <div class="w-full rounded-t-lg bg-brand-200 hover:bg-brand-400 transition-colors cursor-pointer" style="height:60%"></div>
+        <div class="text-[11px] text-gray-400">Sáb</div>
+      </div>
+      <div class="flex flex-col items-center flex-1 gap-1">
+        <div class="text-[10px] font-medium text-gray-600">R$420</div>
+        <div class="w-full rounded-t-lg bg-brand-100 hover:bg-brand-300 transition-colors cursor-pointer" style="height:28%"></div>
+        <div class="text-[11px] text-gray-400">Dom</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pedidos recentes -->
+  <div class="card">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-display text-base font-bold text-gray-900">Pedidos recentes</h2>
+      <button onclick="painel_admin_verTodosPedidos()" class="text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors">Ver todos →</button>
+    </div>
+    <div id="lista-pedidos-admin" class="space-y-2.5">
+    </div>
+  </div>
+
+  <!-- Duas colunas: Produtos + Alertas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <!-- Produtos mais vendidos -->
+    <div class="card">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-display text-base font-bold text-gray-900">Mais vendidos</h2>
+        <button onclick="painel_admin_navegar('catalogo-completo')" class="text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors">Catálogo →</button>
+      </div>
+      <div id="lista-produtos-top" class="space-y-2.5">
+      </div>
+    </div>
+
+    <!-- Alertas -->
+    <div class="card">
+      <h2 class="font-display text-base font-bold text-gray-900 mb-3">Alertas importantes</h2>
+      <div class="space-y-2.5">
+        <div onclick="painel_admin_verVacina('Max')" class="flex items-start gap-3 p-3 rounded-xl bg-red-50 border border-red-100 cursor-pointer hover:bg-red-100 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.774-.833-1.732-.833-2.5 0L4.268 18.5c-.774.833.192 2.5 1.732 2.5z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-red-800">Vacina vencendo em <strong>2 dias</strong></p>
+            <p class="text-xs text-red-600 mt-0.5">Max (Golden Retriever) — Raiva</p>
+            <p class="text-[11px] text-red-500">Tutor: Carlos Eduardo</p>
+          </div>
+          <svg class="w-4 h-4 text-red-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+
+        <div onclick="painel_admin_verVacina('Luna')" class="flex items-start gap-3 p-3 rounded-xl bg-red-50 border border-red-100 cursor-pointer hover:bg-red-100 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.774-.833-1.732-.833-2.5 0L4.268 18.5c-.774.833.192 2.5 1.732 2.5z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-red-800">Vacina vencendo em <strong>5 dias</strong></p>
+            <p class="text-xs text-red-600 mt-0.5">Luna (Poodle) — V10</p>
+            <p class="text-[11px] text-red-500">Tutora: Fernanda Lima</p>
+          </div>
+          <svg class="w-4 h-4 text-red-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+
+        <div onclick="painel_admin_verVacina('Thor')" class="flex items-start gap-3 p-3 rounded-xl bg-amber-50 border border-amber-100 cursor-pointer hover:bg-amber-100 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-amber-800">Vacina vencendo em <strong>6 dias</strong></p>
+            <p class="text-xs text-amber-700 mt-0.5">Thor (Bulldog) — Gripe Canina</p>
+            <p class="text-[11px] text-amber-500">Tutor: Rafael Santos</p>
+          </div>
+          <svg class="w-4 h-4 text-amber-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+
+        <div onclick="painel_admin_confirmarAgendamento('a1')" class="flex items-start gap-3 p-3 rounded-xl bg-blue-50 border border-blue-100 cursor-pointer hover:bg-blue-100 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-blue-800">Agendamento pendente</p>
+            <p class="text-xs text-blue-700 mt-0.5">Banho & Tosa — Luna, amanhã 14h</p>
+            <p class="text-[11px] text-blue-500">Tutora: Fernanda Lima</p>
+          </div>
+          <svg class="w-4 h-4 text-blue-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+
+        <div onclick="painel_admin_confirmarAgendamento('a2')" class="flex items-start gap-3 p-3 rounded-xl bg-blue-50 border border-blue-100 cursor-pointer hover:bg-blue-100 transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-blue-800">Agendamento pendente</p>
+            <p class="text-xs text-blue-700 mt-0.5">Consulta — Max, hoje 16h30</p>
+            <p class="text-[11px] text-blue-500">Tutor: Carlos Eduardo</p>
+          </div>
+          <svg class="w-4 h-4 text-blue-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ações rápidas -->
+  <div class="card">
+    <h2 class="font-display text-base font-bold text-gray-900 mb-3">Ações rápidas</h2>
+    <div class="grid grid-cols-4 gap-2">
+      <button onclick="mostrarTela('catalogo-completo')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-gray-50 hover:bg-brand-50 border border-gray-100 hover:border-brand-200 transition-all active:scale-95">
+        <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        </div>
+        <span class="text-[11px] font-medium text-gray-600">Produtos</span>
+      </button>
+      <button onclick="mostrarTela('agendar-servico')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-gray-50 hover:bg-brand-50 border border-gray-100 hover:border-brand-200 transition-all active:scale-95">
+        <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+        </div>
+        <span class="text-[11px] font-medium text-gray-600">Novo agend.</span>
+      </button>
+      <button onclick="painel_admin_navegarClientes()" class="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-gray-50 hover:bg-brand-50 border border-gray-100 hover:border-brand-200 transition-all active:scale-95">
+        <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+        </div>
+        <span class="text-[11px] font-medium text-gray-600">Cliente</span>
+      </button>
+      <button onclick="painel_admin_relatorios()" class="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-gray-50 hover:bg-brand-50 border border-gray-100 hover:border-brand-200 transition-all active:scale-95">
+        <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <span class="text-[11px] font-medium text-gray-600">Relatório</span>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  const pedidos = [
+    { id:'p1', cliente:'Ana Beatriz', pet:'Rex', servico:'Banho & Tosa', valor:85.00, status:'entregue', data:'2025-07-15', pagamento:'Pix' },
+    { id:'p2', cliente:'Carlos Eduardo', pet:'Max', servico:'Ração Premium 15kg', valor:289.90, status:'preparando', data:'2025-07-15', pagamento:'Cartão' },
+    { id:'p3', cliente:'Fernanda Lima', pet:'Luna', servico:'Vacina V10', valor:120.00, status:'entregue', data:'2025-07-15', pagamento:'Pix' },
+    { id:'p4', cliente:'João Pedro', pet:'Thor', servico:'Consulta Veterinária', valor:200.00, status:'pendente', data:'2025-07-15', pagamento:'Cartão' },
+    { id:'p5', cliente:'Mariana Costa', pet:'Mel', servico:'Coleira Antipulgas', valor:45.90, status:'entregue', data:'2025-07-14', pagamento:'Pix' },
+    { id:'p6', cliente:'Rafael Santos', pet:'Thor', servico:'Banho Medicamentoso', valor:95.00, status:'preparando', data:'2025-07-14', pagamento:'Dinheiro' },
+    { id:'p7', cliente:'Patrícia Alves', pet:'Nina', servico:'Ração Light 10kg', valor:159.90, status:'pendente', data:'2025-07-14', pagamento:'Cartão' },
+    { id:'p8', cliente:'Lucas Oliveira', pet:'Bob', servico:'Vacina Antirrábica', valor:90.00, status:'entregue', data:'2025-07-13', pagamento:'Pix' },
+  ];
+
+  const produtosTop = [
+    { nome:'Ração Premium 15kg', vendas:142, img:'🥩', cor:'bg-orange-100', qtd:8 },
+    { nome:'Vacina V10', vendas:98, img:'💉', cor:'bg-blue-100', qtd:5 },
+    { nome:'Banho & Tosa', vendas:87, img:'🛁', cor:'bg-pink-100', qtd:12 },
+    { nome:'Coleira Antipulgas', vendas:76, img:'🔗', cor:'bg-green-100', qtd:6 },
+    { nome:'Ração Light 10kg', vendas:64, img:'🌾', cor:'bg-yellow-100', qtd:4 },
+  ];
+
+  const statusConfig = {
+    entregue: { label:'Entregue', bg:'bg-emerald-50', text:'text-emerald-700', dot:'bg-emerald-500' },
+    preparando: { label:'Preparando', bg:'bg-amber-50', text:'text-amber-700', dot:'bg-amber-500' },
+    pendente: { label:'Pendente', bg:'bg-orange-50', text:'text-orange-700', dot:'bg-orange-500' },
+  };
+
+  function renderPedidos(filtro) {
+    const el = document.getElementById('lista-pedidos-admin');
+    if (!el) return;
+    const lista = filtro ? pedidos.filter(p => p.status === filtro) : pedidos;
+    if (lista.length === 0) {
+      el.innerHTML = '<div class="text-center py-8 text-gray-400"><svg class="w-10 h-10 mx-auto mb-2 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg><p class="text-sm">Nenhum pedido encontrado</p></div>';
+      return;
+    }
+    el.innerHTML = lista.map(p => {
+      const s = statusConfig[p.status];
+      return '<div onclick="painel_admin_detalhePedido(\''+p.id+'\')" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-brand-50 border border-transparent hover:border-brand-100 cursor-pointer transition-all active:scale-[0.98]">' +
+        '<div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-sm font-bold text-brand-700 flex-shrink-0">' + p.cliente.split(' ').map(w=>w[0]).join('').slice(0,2) + '</div>' +
+        '<div class="flex-1 min-w-0">' +
+          '<div class="flex items-center gap-2">' +
+            '<p class="text-sm font-medium text-gray-900 truncate">' + p.cliente + ' — ' + p.pet + '</p>' +
+          '</div>' +
+          '<p class="text-xs text-gray-500 mt-0.5 truncate">' + p.servico + '</p>' +
+        '</div>' +
+        '<div class="text-right flex-shrink-0">' +
+          '<span class="' + s.bg + ' ' + s.text + ' text-[11px] font-medium px-2 py-0.5 rounded-full flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full ' + s.dot + '"></span>' + s.label + '</span>' +
+          '<p class="text-sm font-bold text-gray-900 mt-1">' + brl(p.valor) + '</p>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderProdutosTop() {
+    const el = document.getElementById('lista-produtos-top');
+    if (!el) return;
+    el.innerHTML = produtosTop.map((p, i) =>
+      '<div onclick="painel_admin_detalheProduto('+i+')" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 cursor-pointer transition-all active:scale-[0.98]">' +
+        '<div class="w-10 h-10 rounded-xl ' + p.cor + ' flex items-center justify-center text-lg flex-shrink-0">' + p.img + '</div>' +
+        '<div class="flex-1 min-w-0">' +
+          '<p class="text-sm font-medium text-gray-900 truncate">' + p.nome + '</p>' +
+          '<p class="text-xs text-gray-500">' + p.vendas + ' vendas</p>' +
+        '</div>' +
+        '<div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center flex-shrink-0">' +
+          '<span class="text-xs font-bold text-brand-700">' + (i+1) + '</span>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  window.painel_admin_detalhePedido = function(id) {
+    const p = pedidos.find(x => x.id === id);
+    if (!p) return;
+    const s = statusConfig[p.status];
+    const html = '<div class="space-y-4">' +
+      '<div class="flex items-center gap-3">' +
+        '<div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-lg font-bold text-brand-700">' + p.cliente.split(' ').map(w=>w[0]).join('').slice(0,2) + '</div>' +
+        '<div><p class="font-medium text-gray-900">' + p.cliente + '</p><p class="text-sm text-gray-500">' + p.pet + '</p></div>' +
+      '</div>' +
+      '<div class="grid grid-cols-2 gap-3">' +
+        '<div class="p-3 rounded-xl bg-gray-50"><p class="text-[11px] text-gray-500 uppercase tracking-wide">Serviço</p><p class="text-sm font-medium mt-0.5">' + p.servico + '</p></div>' +
+        '<div class="p-3 rounded-xl bg-gray-50"><p class="text-[11px] text-gray-500 uppercase tracking-wide">Valor</p><p class="text-sm font-medium mt-0.5">' + brl(p.valor) + '</p></div>' +
+        '<div class="p-3 rounded-xl bg-gray-50"><p class="text-[11px] text-gray-500 uppercase tracking-wide">Pagamento</p><p class="text-sm font-medium mt-0.5">' + p.pagamento + '</p></div>' +
+        '<div class="p-3 rounded-xl bg-gray-50"><p class="text-[11px] text-gray-500 uppercase tracking-wide">Data</p><p class="text-sm font-medium mt-0.5">' + dataBR(p.data) + '</p></div>' +
+      '</div>' +
+      '<div><p class="text-[11px] text-gray-500 uppercase tracking-wide mb-1">Status</p><span class="' + s.bg + ' ' + s.text + ' text-sm font-medium px-3 py-1 rounded-full inline-flex items-center gap-1.5"><span class="w-2 h-2 rounded-full ' + s.dot + '"></span>' + s.label + '</span></div>' +
+      (p.status !== 'entregue' ? '<button onclick="painel_admin_avancarStatus(\'' + p.id + '\'); fecharModal();" class="w-full btn mt-2 active:scale-95">Avançar status →</button>' : '') +
+    '</div>';
+    abrirModal(html, 'Detalhe do Pedido #' + p.id.toUpperCase());
+  };
+
+  window.painel_admin_avancarStatus = function(id) {
+    const p = pedidos.find(x => x.id === id);
+    if (!p) return;
+    const fluxo = { pendente:'preparando', preparando:'entregue' };
+    p.status = fluxo[p.status] || p.status;
+    renderPedidos();
+    toast('Pedido #' + id.toUpperCase() + ' atualizado para "' + statusConfig[p.status].label + '"', 'ok');
+  };
+
+  window.painel_admin_detalheProduto = function(idx) {
+    const p = produtosTop[idx];
+    const html = '<div class="space-y-3">' +
+      '<div class="text-center">' +
+        '<div class="w-20 h-20 rounded-2xl ' + p.cor + ' flex items-center justify-center text-4xl mx-auto">' + p.img + '</div>' +
+        '<h3 class="font-display font-bold text-gray-900 mt-3">' + p.nome + '</h3>' +
+        '<p class="text-sm text-gray-500">Ranking #' + (idx+1) + ' · ' + p.vendas + ' vendas esta semana</p>' +
+      '</div>' +
+      '<div class="grid grid-cols-2 gap-3">' +
+        '<div class="p-3 rounded-xl bg-brand-50 text-center"><p class="text-xl font-bold text-brand-700">' + p.vendas + '</p><p class="text-[11px] text-brand-600">Vendas/semana</p></div>' +
+        '<div class="p-3 rounded-xl bg-gray-50 text-center"><p class="text-xl font-bold text-gray-700">' + p.qtd + '</p><p class="text-[11px] text-gray-500">Em estoque</p></div>' +
+      '</div>' +
+      '<button onclick="fecharModal(); mostrarTela(\'detalhe-produto\');" class="w-full btn mt-1 active:scale-95">Ver produto completo</button>' +
+    '</div>';
+    abrirModal(html, p.nome);
+  };
+
+  window.painel_admin_mostrarPedidos = function(filtro) {
+    renderPedidos(filtro);
+    const label = filtro ? 'Pedidos ' + statusConfig[filtro].label : 'Pedidos recentes';
+    toast(label + ' filtrados', 'info');
+  };
+
+  window.painel_admin_verTodosPedidos = function() {
+    renderPedidos();
+    toast('Lista completa de pedidos', 'info');
+  };
+
+  window.painel_admin_confirmarAgendamento = function(id) {
+    const html = '<div class="space-y-4">' +
+      '<p class="text-sm text-gray-600">Confirmar presença para este agendamento?</p>' +
+      '<div class="p-3 rounded-xl bg-blue-50 border border-blue-100">' +
+        '<p class="text-sm font-medium text-blue-800">' + (id==='a1'?'Banho & Tosa — Luna (Fernanda Lima)':'Consulta — Max (Carlos Eduardo)') + '</p>' +
+        '<p class="text-xs text-blue-600 mt-0.5">' + (id==='a1'?'Amanhã às 14h':'Hoje às 16h30') + '</p>' +
+      '</div>' +
+      '<div class="grid grid-cols-2 gap-3">' +
+        '<button onclick="fecharModal(); painel_admin_acaoConfirmar('+id+');" class="btn active:scale-95">Confirmar</button>' +
+        '<button onclick="fecharModal();" class="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all active:scale-95">Cancelar</button>' +
+      '</div>' +
+    '</div>';
+    abrirModal(html, 'Confirmar Agendamento');
+  };
+
+  window.painel_admin_acaoConfirmar = function(id) {
+    toast(id==='a1'?'Banho & Tosa confirmado para Luna!':'Consulta confirmada para Max!', 'ok');
+  };
+
+  window.painel_admin_verVacina = function(pet) {
+    const html = '<div class="space-y-4">' +
+      '<div class="flex items-center gap-3">' +
+        '<div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-2xl">💉</div>' +
+        '<div><p class="font-medium text-gray-900">Vacina de ' + pet + '</p><p class="text-sm text-gray-500">Próxima dose em breve</p></div>' +
+      '</div>' +
+      '<div class="p-3 rounded-xl bg-red-50 border border-red-100">' +
+        '<p class="text-sm text-red-800 font-medium">Atenção: vacina vence em poucos dias</p>' +
+        '<p class="text-xs text-red-600 mt-1">Entre em contato com o tutor para confirmar o agendamento.</p>' +
+      '</div>' +
+      '<div class="grid grid-cols-2 gap-3">' +
+        '<button onclick="fecharModal(); mostrarTela(\'notificacoes\');" class="btn active:scale-95">Enviar lembrete</button>' +
+        '<button onclick="fecharModal(); toast(\'Data de vacinação atualizada\', \'ok\');" class="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all active:scale-95">Atualizar data</button>' +
+      '</div>' +
+    '</div>';
+    abrirModal(html, 'Detalhe da Vacina — ' + pet);
+  };
+
+  window.painel_admin_abrirNotificacoes = function() {
+    mostrarTela('notificacoes');
+  };
+
+  window.painel_admin_navegar = function(tela) {
+    mostrarTela(tela);
+  };
+
+  window.painel_admin_navegarClientes = function() {
+    toast('Lista de clientes — ' + pedidos.length + ' clientes ativos', 'info');
+  };
+
+  window.painel_admin_relatorios = function() {
+    toast('Relatórios gerais: faturamento R$ 5.240 esta semana', 'ok');
+  };
+
+  renderPedidos();
+  renderProdutosTop();
+})();
+</script>
+</section>
+
     <!-- TELAS -->nbsp;<span id="carrinho-agendamento-preco">85,00</span></span>
           <button class="mt-1 text-xs text-error-600 font-medium underline decoration-1 hover:text-error-700 transition" onclick="carrinho_removerAgendamento()">Remover</button>
         </div>
