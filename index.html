@@ -1276,6 +1276,229 @@ document.addEventListener('keydown', (e) => {
       }
     </script>
 
+    <section data-tela="detalhe-produto" class="hidden">
+  <div class="fade-in">
+    <!-- Galeria -->
+    <div class="relative">
+      <div id="galeria-scroll" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth" style="scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+        <div class="w-full flex-shrink-0 snap-center h-72 bg-gradient-to-br from-marca-100 to-marca-200 flex items-center justify-center relative">
+          <svg class="w-24 h-24 text-marca-300" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
+          <span class="absolute bottom-3 text-xs font-medium text-marca-600 bg-white/70 rounded-full px-3 py-1">Embalagem frontal</span>
+        </div>
+        <div class="w-full flex-shrink-0 snap-center h-72 bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center relative">
+          <svg class="w-24 h-24 text-orange-300" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
+          <span class="absolute bottom-3 text-xs font-medium text-orange-700 bg-white/70 rounded-full px-3 py-1">Embalagem traseira</span>
+        </div>
+        <div class="w-full flex-shrink-0 snap-center h-72 bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center relative">
+          <svg class="w-24 h-24 text-emerald-300" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+          <span class="absolute bottom-3 text-xs font-medium text-emerald-700 bg-white/70 rounded-full px-3 py-1">Tabela nutricional</span>
+        </div>
+        <div class="w-full flex-shrink-0 snap-center h-72 bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center relative">
+          <svg class="w-24 h-24 text-amber-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span class="absolute bottom-3 text-xs font-medium text-amber-700 bg-white/70 rounded-full px-3 py-1">Golden usando ♥</span>
+        </div>
+      </div>
+      <div class="flex justify-center gap-1.5 py-2">
+        <span class="dot w-2 h-2 rounded-full bg-marca-500"></span>
+        <span class="dot w-2 h-2 rounded-full bg-gray-300"></span>
+        <span class="dot w-2 h-2 rounded-full bg-gray-300"></span>
+        <span class="dot w-2 h-2 rounded-full bg-gray-300"></span>
+      </div>
+      <button onclick="detalhe_produto_toggleFav()" id="btn-favorito" class="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-md active:scale-90 transition-transform z-10" aria-label="Favoritar">
+        <svg id="icone-fav" class="w-5 h-5 text-gray-400 transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </button>
+    </div>
+
+    <!-- Info do produto -->
+    <div class="px-4 pt-2 pb-3">
+      <span class="badge badge-marca text-xs">🐕 Cães Adultos</span>
+      <h1 class="font-display text-xl font-bold text-gray-900 mt-2 leading-tight">Ração Premium Golden Power 15kg</h1>
+      <p class="text-sm text-gray-500 mt-1">Golden Formula • Linha Power</p>
+      <div class="flex items-center gap-2 mt-2">
+        <div class="flex gap-0.5">
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <span class="text-sm font-semibold text-gray-700">4.9</span>
+        <span class="text-sm text-gray-400">(127 avaliações)</span>
+      </div>
+      <div class="mt-3 flex items-baseline gap-2">
+        <span class="text-2xl font-display font-bold text-gray-900">R$ 189,90</span>
+        <span class="text-sm text-gray-400 line-through">R$ 229,90</span>
+        <span class="badge badge-success text-xs">-17%</span>
+      </div>
+      <p class="text-xs text-gray-400 mt-1">ou 6x de R$ 31,65 sem juros • R$ 12,66/kg</p>
+    </div>
+
+    <!-- Seletor de quantidade -->
+    <div class="px-4 py-3 border-t border-gray-100">
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-medium text-gray-700">Quantidade</span>
+        <div class="flex items-center gap-3">
+          <button onclick="detalhe_produto_alterarQtd(-1)" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center active:scale-90 transition-transform">
+            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 12H4"/></svg>
+          </button>
+          <span id="qtd-produto" class="text-lg font-bold text-gray-900 w-6 text-center">1</span>
+          <button onclick="detalhe_produto_alterarQtd(1)" class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center active:scale-90 transition-transform">
+            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Descrição -->
+    <div class="px-4 py-3 border-t border-gray-100">
+      <h2 class="font-display font-semibold text-gray-900 text-base">Descrição</h2>
+      <p class="text-sm text-gray-600 mt-2 leading-relaxed">Ração Golden Formula Power para cães adultos de porte grande, formulada com ingredientes selecionados que proporcionam saúde e vitalidade. Enriquecida com aminoácidos, vitaminas e minerais que ajudam no fortalecimento muscular e na saúde articular. Ideal para cães com mais de 1 ano de idade que necessitam de maior aporte nutricional.</p>
+      <div class="mt-3 bg-gray-50 rounded-xl p-3">
+        <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Composição / Ingredientes</h3>
+        <p class="text-sm text-gray-600">Arroz integral, milho, farinha de carne, farinha de vísceras, gordura animal, farelo de soja, linhaça, óleo de peixe, levedura, premix vitamínico e mineral, antioxidante natural.</p>
+      </div>
+      <div class="mt-3 bg-gray-50 rounded-xl p-3">
+        <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Informações nutricionais (por 100g)</h3>
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div><span class="block text-sm font-bold text-gray-800">22%</span><span class="text-xs text-gray-500">Proteínas</span></div>
+          <div><span class="block text-sm font-bold text-gray-800">14%</span><span class="text-xs text-gray-500">Gorduras</span></div>
+          <div><span class="block text-sm font-bold text-gray-800">3.5%</span><span class="text-xs text-gray-500">Fibras</span></div>
+        </div>
+      </div>
+      <div class="mt-3 bg-amber-50 border border-amber-200 rounded-xl p-3">
+        <h3 class="text-xs font-semibold text-amber-800 uppercase tracking-wider mb-1">⚠️ Contraindicações</h3>
+        <p class="text-sm text-amber-700">Não recomendado para filhotes menores de 1 ano ou cães com restrição alimentar específica sem orientação veterinária.</p>
+      </div>
+    </div>
+
+    <!-- Avaliações -->
+    <div class="px-4 py-3 border-t border-gray-100">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-display font-semibold text-gray-900 text-base">Avaliações <span class="text-sm font-normal text-gray-400">(127)</span></h2>
+        <div class="flex items-center gap-1">
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <span class="text-sm font-bold text-gray-800">4.9</span>
+        </div>
+      </div>
+      <div id="lista-avaliacoes" class="space-y-3"></div>
+    </div>
+
+    <!-- Produtos que combinam -->
+    <div class="px-4 py-3 border-t border-gray-100">
+      <h2 class="font-display font-semibold text-gray-900 text-base mb-3">✨ Produtos que combinam</h2>
+      <div id="lista-combinam" class="space-y-3"></div>
+    </div>
+
+    <!-- Botões fixos -->
+    <div class="px-4 py-4 flex gap-3 bg-white border-t border-gray-100 sticky bottom-0">
+      <button onclick="mostrarTela('carrinho')" class="flex-1 py-3.5 rounded-2xl border-2 border-marca-500 text-marca-700 font-display font-semibold text-sm active:scale-95 transition-all hover:bg-marca-50">
+        🛒 Adicionar ao Carrinho
+      </button>
+      <button onclick="mostrarTela('checkout')" class="flex-1 py-3.5 rounded-2xl bg-orange-500 text-white font-display font-semibold text-sm active:scale-95 transition-all shadow-lg shadow-orange-200 hover:bg-orange-600">
+        Comprar Agora
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  let qtd = 1;
+  let favoritado = false;
+
+  function alterarQtd(delta) {
+    qtd = Math.max(1, Math.min(20, qtd + delta));
+    var el = document.getElementById('qtd-produto');
+    if (el) el.textContent = qtd;
+  }
+  window.detalhe_produto_alterarQtd = alterarQtd;
+
+  function toggleFav() {
+    favoritado = !favoritado;
+    var btn = document.getElementById('icone-fav');
+    if (btn) {
+      btn.classList.toggle('text-red-500', favoritado);
+      btn.classList.toggle('text-gray-400', !favoritado);
+    }
+    toast(favoritado ? 'Adicionado aos favoritos!' : 'Removido dos favoritos', 'ok');
+  }
+  window.detalhe_produto_toggleFav = toggleFav;
+
+  var avaliacoes = [
+    { nome:'Maria S.', pet:'Thor', inicial:'M', cor:'bg-rose-400', texto:'Meu golden Thor adorou! A pelagem ficou muito mais brilhante em menos de um mês. Recomendo muito!', foto:'Thor ♥', estrelas:5, data:'2024-11-15' },
+    { nome:'Carlos E.', pet:'Luna', inicial:'C', cor:'bg-sky-400', texto:'Minha cadela Luna é muito exigente, mas come essa ração sem reclamar. Qualidade nota 10!', foto:'Luna 🐶', estrelas:5, data:'2024-10-28' },
+    { nome:'Fernanda R.', pet:'Max', inicial:'F', cor:'bg-violet-400', texto:'Max tem 3 anos e pele sensível, essa ração resolveu o problema. Ótimo produto!', foto:'Max 🐕', estrelas:5, data:'2024-10-10' },
+    { nome:'Ricardo M.', pet:'Belinha', inicial:'R', cor:'bg-emerald-400', texto:'Ótimo custo-benefício. O frete chegou rápido e o produto é original.', foto:'Belinha 🐩', estrelas:4, data:'2024-09-22' },
+    { nome:'Patricia L.', pet:'Bob', inicial:'P', cor:'bg-amber-400', texto:'Bob adorou! A única ração que ele come sem que eu precise misturar com outra coisa.', foto:'Bob 🐾', estrelas:5, data:'2024-09-05' },
+    { nome:'André T.', pet:'Nina', inicial:'A', cor:'bg-teal-400', texto:'Muito boa, Nina está mais disposta e com energia renovada. Voltarei a comprar!', foto:'Nina 💛', estrelas:5, data:'2024-08-18' }
+  ];
+
+  var combinam = [
+    { nome:'Biscoito Natural Golden Cães', preco:18.90, img:'bg-gradient-to-br from-yellow-100 to-orange-200', compat:'Perfeito para pet' },
+    { nome:'Shampoo Hidratante Pet Clean 500ml', preco:34.90, img:'bg-gradient-to-br from-sky-100 to-blue-200', compat:'Cuidado completo' },
+    { nome:'Brinquedo Pelúcia Cachorro Grande', preco:29.90, img:'bg-gradient-to-br from-pink-100 to-rose-200', compat:'Diversão garantida' },
+    { nome:'Suplemento Articular Golden 120g', preco:49.90, img:'bg-gradient-to-br from-green-100 to-emerald-200', compat:'Saúde das juntas' }
+  ];
+
+  function renderAvaliacoes() {
+    var c = document.getElementById('lista-avaliacoes');
+    if (!c) return;
+    c.innerHTML = avaliacoes.map(function(a) {
+      var estrelasSvg = '';
+      for (var i=0;i<5;i++) estrelasSvg += '<svg class="w-3.5 h-3.5 '+(i<a.estrelas?'text-amber-400':'text-gray-200')+'" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+      return '<div class="bg-gray-50 rounded-xl p-3">' +
+        '<div class="flex items-start gap-3">' +
+          '<div class="w-10 h-10 rounded-full '+a.cor+' flex items-center justify-center text-white text-sm font-bold flex-shrink-0">'+a.inicial+'</div>' +
+          '<div class="flex-1 min-w-0">' +
+            '<div class="flex items-center gap-1">'+estrelasSvg+'</div>' +
+            '<p class="text-sm text-gray-700 mt-1 leading-relaxed">"'+a.texto+'"</p>' +
+            '<div class="flex items-center gap-2 mt-1.5">' +
+              '<span class="text-xs font-semibold text-gray-800">'+a.nome+'</span>' +
+              '<span class="text-xs text-gray-400">•</span>' +
+              '<span class="text-xs text-gray-400">'+a.data+'</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderCombinam() {
+    var c = document.getElementById('lista-combinam');
+    if (!c) return;
+    c.innerHTML = combinam.map(function(p) {
+      return '<div onclick="mostrarTela(\'detalhe-produto\')" class="card flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-transform">' +
+        '<div class="w-16 h-16 rounded-xl '+p.img+' flex items-center justify-center flex-shrink-0">' +
+          '<svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>' +
+        '</div>' +
+        '<div class="flex-1 min-w-0">' +
+          '<p class="text-sm font-semibold text-gray-800 truncate">'+p.nome+'</p>' +
+          '<span class="text-xs text-gray-400">'+p.compat+'</span>' +
+        '</div>' +
+        '<span class="text-sm font-bold text-marca-600 flex-shrink-0">R$ '+p.preco.toFixed(2).replace('.',',')+'</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  function setupGaleria() {
+    var scroll = document.getElementById('galeria-scroll');
+    if (!scroll) return;
+    scroll.addEventListener('scroll', function() {
+      var idx = Math.round(scroll.scrollLeft / scroll.clientWidth);
+      var dots = document.querySelectorAll('.dot');
+      dots.forEach(function(d,i){ d.classList.toggle('bg-marca-500', i===idx); d.classList.toggle('bg-gray-300', i!==idx); });
+    });
+  }
+
+  function init() {
+    renderAvaliacoes();
+    renderCombinam();
+    setupGaleria();
+  }
+  init();
+})();
+</script>
+
     <!-- TELAS -->
   </main>
 
